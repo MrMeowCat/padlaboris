@@ -48,9 +48,17 @@ dependencies {
      */
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
+    complie('org.springframework.boot:spring-boot-starter-aop')
+    compile('org.springframework:spring-aspects')
+    /**
+     * Other
+     */
     compile('org.projectlombok:lombok')
     compile('org.postgresql:postgresql')
     compile("net.sf.dozer:dozer:$dozerVersion")
+    /**
+     * Test dependencies
+     */
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.h2database:h2')
 }
