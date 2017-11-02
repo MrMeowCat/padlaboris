@@ -55,6 +55,8 @@ dependencies {
      */
     compile('org.projectlombok:lombok')
     compile("net.sf.dozer:dozer:$dozerVersion")
+    compile('ch.qos.logback:logback-classic')
+    compile('org.slf4j:slf4j-api')
     /**
      * Test dependencies
      */
