@@ -29,7 +29,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.save(patient);
     }
 
-
     @Override
     public Patient fetch(final Integer id) {
 
