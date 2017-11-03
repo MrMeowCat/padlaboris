@@ -43,7 +43,6 @@ public class MedicalLeave implements Persistable<Integer> {
         return Objects.nonNull(id);
     }
 
-
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "MEDICAL_DOCTOR")
 //    private String md;
