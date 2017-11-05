@@ -4,6 +4,7 @@ import com.instinctools.padlaboris.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -28,4 +29,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
      */
     @Query(value = "SELECT * FROM patients WHERE gender=?1", nativeQuery = true)
     List<Patient> findByGender(String gender);
+
+    @Query(value = "UPDATE patients SET first_name=?2 WHERE patient_id = ?1", nativeQuery = true)
+    Patient updateById(Integer id, String firstName);
 }

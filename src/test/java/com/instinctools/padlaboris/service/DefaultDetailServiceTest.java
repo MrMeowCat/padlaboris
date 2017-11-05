@@ -35,6 +35,7 @@ public class DefaultDetailServiceTest {
 
         detail.setBloodType(1);
         detail.setBMI(1.25);
+        detail.setRhesusFactor("+");
 
         id = detailRepository.save(detail).getId();
     }
@@ -77,11 +78,11 @@ public class DefaultDetailServiceTest {
     }
 
     @Test
-    public void findByBMI() throws Exception {
+    public void findByRhesusFactor() throws Exception {
 
-        final double content = 1.25;
+        final String content = "+";
 
-        assertThat(detailService.findByBMI(content).get(0).getBMI(), Is.is(content));
+        assertThat(detailService.findByRhesusFactor(content).get(0).getRhesusFactor(), Is.is(content));
     }
 
     @Test

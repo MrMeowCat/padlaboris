@@ -1,7 +1,9 @@
 package com.instinctools.padlaboris.service;
 
 import com.instinctools.padlaboris.model.Detail;
+import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
+import com.instinctools.padlaboris.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
 public class DefaultDetailService implements DetailService {
 
     private final DetailRepository detailRepository;
+
 
     @Override
     public Detail create(Detail detail) {
@@ -54,11 +57,11 @@ public class DefaultDetailService implements DetailService {
     }
 
     @Override
-    public List<Detail> findByBMI(double bMI) {
+    public List<Detail> findByRhesusFactor(String findByRhesusFactor) {
 
-        log.info("Detail were find by bmi and displayed.");
+        log.info("Detail were find by findByRhesusFactor and displayed.");
 
-        return detailRepository.findByBMI(bMI);
+        return detailRepository.findByRhesusFactor(findByRhesusFactor);
     }
 
 

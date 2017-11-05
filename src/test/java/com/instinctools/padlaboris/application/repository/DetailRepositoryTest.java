@@ -26,20 +26,20 @@ public class DetailRepositoryTest {
 
         final Detail detail = new Detail();
 
-        detail.setBMI(1.25);
+        detail.setRhesusFactor("+");
         detail.setBloodType(1);
 
         detailRepository.save(detail);
     }
 
     @Test
-    public void findByBMI() throws Exception {
+    public void findByRhesusFactor() throws Exception {
 
-        final double content = 1.25;
+        final String content = "+";
 
-        List<Detail> detail = detailRepository.findByBMI(content);
+        List<Detail> detail = detailRepository.findByRhesusFactor(content);
 
-        assertThat(detail.get(0).getBMI(), Is.is(content));
+        assertThat(detail.get(0).getRhesusFactor(), Is.is(content));
     }
 
     @Test

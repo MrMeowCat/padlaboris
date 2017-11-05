@@ -62,4 +62,6 @@ public interface PatientService {
      * @return List of Patient objects.
      */
     List<Patient> listPatients();
+
+    Patient updateById(Integer id, String firstName);
 }

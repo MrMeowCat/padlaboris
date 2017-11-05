@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface DetailRepository extends JpaRepository<Detail, Integer> {
     /**
-     * Method find details by bmi.
+     * Method find details by rhesusFactor.
      *
-     * @param bMI Detail bMI.
-     * @return List of Detail class objects with this bmi.
+     * @param rhesusFactor Detail rhesusFactor.
+     * @return List of Detail class objects with this rhesusFactor.
      */
-    @Query(value = "SELECT * FROM details WHERE bmi=?1", nativeQuery = true)
-    List<Detail> findByBMI(double bMI);
+    @Query(value = "SELECT * FROM details WHERE RH=?1", nativeQuery = true)
+    List<Detail> findByRhesusFactor(String rhesusFactor);
 
     /**
      * Method find details by blood type.

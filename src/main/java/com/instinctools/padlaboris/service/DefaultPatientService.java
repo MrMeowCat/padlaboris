@@ -77,4 +77,10 @@ public class DefaultPatientService implements PatientService {
 
         return patientRepository.findAll();
     }
+
+    @Override
+    public Patient updateById(Integer id, String firstName) {
+
+        return patientRepository.updateById(id,firstName);
+    }
 }

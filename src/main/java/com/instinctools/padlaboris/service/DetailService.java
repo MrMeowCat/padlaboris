@@ -41,12 +41,12 @@ public interface DetailService {
     void delete(Integer id);
 
     /**
-     * Method for search details in database by bmi.
+     * Method for search details in database by findByRhesusFactor.
      *
-     * @param bMI Detail bMI.
-     * @return List of Detail objects with this bmi.
+     * @param findByRhesusFactor Detail findByRhesusFactor.
+     * @return List of Detail objects with this findByRhesusFactor.
      */
-    List<Detail> findByBMI(double bMI);
+    List<Detail> findByRhesusFactor(String findByRhesusFactor);
 
     /**
      * Method for search details in database by bloodType.
