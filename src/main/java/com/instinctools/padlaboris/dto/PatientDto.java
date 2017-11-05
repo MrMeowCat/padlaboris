@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonTypeName(value = "patient")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NONE,include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NONE, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PatientDto implements Serializable {
 

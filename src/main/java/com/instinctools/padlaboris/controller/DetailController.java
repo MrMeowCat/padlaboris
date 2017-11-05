@@ -2,9 +2,7 @@ package com.instinctools.padlaboris.controller;
 
 import com.instinctools.padlaboris.dto.DetailDto;
 import com.instinctools.padlaboris.model.Detail;
-import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.service.DetailService;
-import com.instinctools.padlaboris.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,32 +27,56 @@ public class DetailController {
 
     @RequestMapping(value = "/details", method = RequestMethod.POST)
     public ResponseEntity createDetail(@RequestBody final DetailDto detailDto) {
+
         dozerBeanMapper = new DozerBeanMapper();
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(detailService.create(dozerBeanMapper.map(detailDto, Detail.class)));
+        DetailDto response = dozerBeanMapper.map(detailService.create(dozerBeanMapper.map(detailDto, Detail.class)),
+                DetailDto.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @RequestMapping(value = "/details/{id}", method = RequestMethod.PUT)
+    public ResponseEntity updateDetail(@RequestBody final DetailDto detailDto, @PathVariable Integer id) {
+
+        this.dozerBeanMapper = new DozerBeanMapper();
+
+        Detail detail = dozerBeanMapper.map(detailDto, Detail.class);
+
+        detailService.updateById(id, detail);
+
+        return ResponseEntity.ok().body(dozerBeanMapper.map(detailService.fetch(id), DetailDto.class));
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
     public ResponseEntity fetchDetail(@PathVariable final Integer id) {
-        return ResponseEntity.ok().body(detailService.fetch(id));
+
+        this.dozerBeanMapper = new DozerBeanMapper();
+
+        return ResponseEntity.ok().body(dozerBeanMapper.map(detailService.fetch(id), DetailDto.class));
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ResponseEntity fetchAllDetails() {
+
         return ResponseEntity.ok().body(detailService.listDetails());
     }
 
     @RequestMapping(value = "/details/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteDetail(@PathVariable final Integer id) {
-        final Detail detail = detailService.fetch(id);
+
+        this.dozerBeanMapper = new DozerBeanMapper();
+
+        final DetailDto response = dozerBeanMapper.map(detailService.fetch(id), DetailDto.class);
 
         detailService.delete(id);
-        return ResponseEntity.ok().body(detail);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(value = "/details/bloodType/{bloodType}", method = RequestMethod.GET)
     public ResponseEntity fetchByBloodType(@PathVariable final Integer bloodType) {
+
         return ResponseEntity.ok().body(detailService.findByBloodType(bloodType));
     }
 

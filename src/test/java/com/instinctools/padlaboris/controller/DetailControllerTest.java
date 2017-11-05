@@ -20,9 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,21 +49,21 @@ public class DetailControllerTest {
 
     private Integer bloodType;
 
-    private String bMI;
+    private String rh;
 
     @Before
     public void setUp() throws Exception {
 
         detail = new Detail();
         detail.setBloodType(1);
-        detail.setBMI(1.23);
+        detail.setBMI(2);
+        detail.setRhesusFactor("+");
 
         id = detailRepository.save(detail).getId();
 
         bloodType = detailRepository.findOne(id).getBloodType();
 
-        String s = String.valueOf(detailRepository.findOne(id).getBMI());
-        bMI=s.replace('.','_');
+        rh=detailRepository.findOne(id).getRhesusFactor();
 
 
         detailDto = new DetailDto();
@@ -87,6 +85,23 @@ public class DetailControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.bmi", is(detailDto.getBMI())))
                 .andExpect(jsonPath("$.bloodType", is(detailDto.getBloodType())));
+    }
+
+    @Test
+    public void updateDetail() throws Exception
+    {
+        detailDto.setBloodType(3);
+        detailDto.setRhesusFactor("-");
+
+        mockMvc.perform(request(PUT, "/details/"+id)
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .content(objectMapper.writeValueAsString(detailDto))
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rhesusFactor", is(detailDto.getRhesusFactor())))
+                .andExpect(jsonPath("$.bloodType", is(detailDto.getBloodType())));
+
     }
 
     @Test
@@ -136,15 +151,15 @@ public class DetailControllerTest {
                 .andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
     }
 
-   // @Test
-    //public void fetchByBMI() throws Exception {
-      //  mockMvc.perform(request(GET,"/details/BMI/"+bMI)
-        //        .accept(APPLICATION_JSON_UTF8_VALUE)
-          //      .contentType(APPLICATION_JSON_UTF8_VALUE))
-            //    .andDo(print())
-              //  .andExpect(status().isOk())
-               // .andExpect(jsonPath("$.[0].bmi",is(detail.getBMI())))
-                //.andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
-    //}
+   @Test
+   public void fetchByBMI() throws Exception {
+        mockMvc.perform(request(GET,"/details/rh/"+rh)
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].rhesusFactor",is(detail.getRhesusFactor())))
+                .andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
+    }
 
 }

@@ -26,14 +26,6 @@ public interface DetailService {
     Detail fetch(Integer id);
 
     /**
-     * Method for update detail to database.
-     *
-     * @param detail Detail detail.
-     * @return updated object of Detail class.
-     */
-    Detail update(Detail detail);
-
-    /**
      * Method for remove detail from database.
      *
      * @param id Detail id.
@@ -62,4 +54,6 @@ public interface DetailService {
      * @return List of Detail objects.
      */
     List<Detail> listDetails();
+
+    void updateById(Integer id,Detail detail);
 }

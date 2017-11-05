@@ -1,9 +1,7 @@
 package com.instinctools.padlaboris.service;
 
 import com.instinctools.padlaboris.model.Detail;
-import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
-import com.instinctools.padlaboris.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * class that implements the Detail's work and databases.
@@ -23,9 +22,8 @@ public class DefaultDetailService implements DetailService {
 
     private final DetailRepository detailRepository;
 
-
     @Override
-    public Detail create(Detail detail) {
+    public Detail create(final Detail detail) {
 
         log.info("Detail added to database.");
 
@@ -33,7 +31,7 @@ public class DefaultDetailService implements DetailService {
     }
 
     @Override
-    public Detail fetch(Integer id) {
+    public Detail fetch(final Integer id) {
 
         log.info("Detail displayed.");
 
@@ -41,15 +39,7 @@ public class DefaultDetailService implements DetailService {
     }
 
     @Override
-    public Detail update(Detail detail) {
-
-        log.info("Detail updated.");
-
-        return detailRepository.save(detail);
-    }
-
-    @Override
-    public void delete(Integer id) {
+    public void delete(final Integer id) {
 
         log.info("Detail deleted from database.");
 
@@ -57,7 +47,7 @@ public class DefaultDetailService implements DetailService {
     }
 
     @Override
-    public List<Detail> findByRhesusFactor(String findByRhesusFactor) {
+    public List<Detail> findByRhesusFactor(final String findByRhesusFactor) {
 
         log.info("Detail were find by findByRhesusFactor and displayed.");
 
@@ -66,7 +56,7 @@ public class DefaultDetailService implements DetailService {
 
 
     @Override
-    public List<Detail> findByBloodType(Integer bloodType) {
+    public List<Detail> findByBloodType(final Integer bloodType) {
 
         log.info("Detail were find by blood type and displayed.");
 
@@ -79,5 +69,22 @@ public class DefaultDetailService implements DetailService {
         log.info("All patients were displayed");
 
         return detailRepository.findAll();
+    }
+
+    @Override
+    public void updateById(final Integer id, final Detail detail) {
+
+        log.info("Detail updated.");
+
+        final Detail saved = detailRepository.findOne(id);
+
+        detailRepository.updateById(id,
+                detail.getHeight() == 0 ? saved.getHeight() : detail.getHeight(),
+                detail.getWeight() == 0 ? saved.getWeight() : detail.getWeight(),
+                detail.getBMI() == 0 ? saved.getBMI() : detail.getBMI(),
+                Objects.isNull(detail.getBloodType()) ? saved.getBloodType() : detail.getBloodType(),
+                Objects.isNull(detail.getRhesusFactor()) ? saved.getRhesusFactor() : detail.getRhesusFactor(),
+                Objects.isNull(detail.getDegreeOfDisability()) ?
+                        saved.getDegreeOfDisability() : detail.getDegreeOfDisability());
     }
 }

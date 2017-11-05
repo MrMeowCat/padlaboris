@@ -26,14 +26,6 @@ public interface PatientService {
     Patient fetch(Integer id);
 
     /**
-     * Method for update patient to database.
-     *
-     * @param patient Patient patient.
-     * @return updated object of Patient class.
-     */
-    Patient update(Patient patient);
-
-    /**
      * Method for remove patient from database.
      *
      * @param id Patient id.
@@ -63,5 +55,5 @@ public interface PatientService {
      */
     List<Patient> listPatients();
 
-    Patient updateById(Integer id, String firstName);
+    void updateById(Integer id, Patient patient);
 }

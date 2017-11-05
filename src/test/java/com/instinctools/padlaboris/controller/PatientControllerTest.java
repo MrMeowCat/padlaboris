@@ -85,6 +85,22 @@ public class PatientControllerTest {
     }
 
     @Test
+    public void updatePatient()throws Exception
+    {
+        patientDto.setLastName("update");
+        patientDto.setFirstName("update");
+
+        mockMvc.perform(request(PUT,"/patients/"+id)
+        .accept(APPLICATION_JSON_UTF8_VALUE)
+        .content(objectMapper.writeValueAsString(patientDto))
+        .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName",is(patientDto.getFirstName())))
+                .andExpect(jsonPath("$.lastName",is(patientDto.getLastName())));
+    }
+
+    @Test
     public void deletePatient() throws Exception {
         mockMvc.perform(request(DELETE, "/patients/" + id)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
