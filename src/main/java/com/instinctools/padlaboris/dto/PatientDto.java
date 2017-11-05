@@ -20,6 +20,9 @@ public class PatientDto implements Serializable {
     private static final long serialVersionUID = -2090141102525873071L;
 
     @JsonProperty
+    private Integer id;
+
+    @JsonProperty
     private String firstName;
 
     @JsonProperty

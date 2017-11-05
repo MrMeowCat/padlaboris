@@ -13,11 +13,14 @@ import java.io.Serializable;
  */
 @Data
 @JsonTypeName(value = "detail")
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NONE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DetailDto implements Serializable {
 
     private static final long serialVersionUID = 4201434315802854503L;
+
+    @JsonProperty
+    private Integer id;
 
     @JsonProperty
     private double height;
