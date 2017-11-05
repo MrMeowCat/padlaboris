@@ -8,13 +8,14 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 @Aspect
 public class LoggingAspect {
 
-    private final Logger logger = LoggerFactory.getLogger(TypeData.ClassName.class);
+    private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Pointcut("@annotation(Auditable)")
+    @Pointcut("@annotation(com.instinctools.padlaboris.aspect.Loggable)")
     public void PointCutDefinition() {
     }
 
@@ -22,13 +23,13 @@ public class LoggingAspect {
     public void atExecution() {
     }
 
-    @Before("PointCutDefinition() && atExecution()")
+    @Before("atExecution() && PointCutDefinition()")
     public void beforeLoggingAdvice(JoinPoint joinPoint) {
-        logger.debug("HELLO EBAT");
+        logger.info("SOMETHING");
     }
 
-    @After("PointCutDefinition() && atExecution()")
+    @After("atExecution() && PointCutDefinition()")
     public void afterLoggingAdvice(JoinPoint joinPoint) {
-        logger.debug("BB NAXYI");
+        logger.info("SOMETHING");
     }
 }
