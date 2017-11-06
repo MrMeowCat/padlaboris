@@ -1,7 +1,9 @@
 package com.instinctools.padlaboris.service;
 
 import com.instinctools.padlaboris.model.Detail;
+import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
+import com.instinctools.padlaboris.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,18 @@ public class DefaultDetailService implements DetailService {
 
     private final DetailRepository detailRepository;
 
+    private final PatientService patientService;
+
     @Override
     public Detail create(final Detail detail) {
 
         log.info("Detail added to database.");
+
+        Patient patient=patientService.fetch(1);
+
+        patient.setDetails(detail);
+
+        patientService.updateById(1,patient);
 
         return detailRepository.save(detail);
     }
@@ -82,9 +92,9 @@ public class DefaultDetailService implements DetailService {
                 detail.getHeight() == 0 ? saved.getHeight() : detail.getHeight(),
                 detail.getWeight() == 0 ? saved.getWeight() : detail.getWeight(),
                 detail.getBMI() == 0 ? saved.getBMI() : detail.getBMI(),
-                Objects.isNull(detail.getBloodType()) ? saved.getBloodType() : detail.getBloodType(),
+                detail.getBloodType() == 0 ? saved.getBloodType() : detail.getBloodType(),
                 Objects.isNull(detail.getRhesusFactor()) ? saved.getRhesusFactor() : detail.getRhesusFactor(),
-                Objects.isNull(detail.getDegreeOfDisability()) ?
+                detail.getDegreeOfDisability()==0 ?
                         saved.getDegreeOfDisability() : detail.getDegreeOfDisability());
     }
 }

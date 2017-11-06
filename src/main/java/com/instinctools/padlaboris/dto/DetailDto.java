@@ -32,11 +32,11 @@ public class DetailDto implements Serializable {
     private double bMI;
 
     @JsonProperty
-    private Integer bloodType;
+    private int bloodType;
 
     @JsonProperty
     private String rhesusFactor;
 
     @JsonProperty
-    private Integer degreeOfDisability;
+    private int degreeOfDisability;
 }

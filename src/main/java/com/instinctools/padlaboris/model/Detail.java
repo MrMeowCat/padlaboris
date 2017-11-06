@@ -37,16 +37,16 @@ public class Detail implements Persistable<Integer> {
     private double bMI;
 
     @Column(name = "blood_type")
-    private Integer bloodType;
+    private int bloodType;
 
     @Column(name = "RH")
     private String rhesusFactor;
 
     @Column(name = "degree_of_disability")
-    private Integer degreeOfDisability;
+    private int degreeOfDisability;
 
-    @OneToOne(mappedBy = "details")
-    private Patient patient;
+    @Column(name = "owner_id")
+    private Integer patientId;
 
     @Override
     public boolean isNew() {

@@ -72,7 +72,7 @@ public class DefaultDetailServiceTest {
 
         updateDetail.setBloodType(content);
 
-        detailService.update(updateDetail);
+        detailService.updateById(id,updateDetail);
 
         assertThat(detailRepository.findOne(id).getBloodType(), Is.is(content));
     }

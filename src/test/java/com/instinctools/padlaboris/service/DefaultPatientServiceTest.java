@@ -53,7 +53,6 @@ public class DefaultPatientServiceTest {
     }
 
     @Test
-    @Transactional
     public void update() throws Exception {
 
         final String content = "updatePatientLastName";
@@ -61,7 +60,7 @@ public class DefaultPatientServiceTest {
         final Patient updatePatient = patientRepository.findOne(id);
 
         updatePatient.setLastName(content);
-        patientService.update(updatePatient);
+        patientService.updateById(id,updatePatient);
 
         assertThat(patientRepository.findOne(id).getLastName(), Is.is(content));
     }

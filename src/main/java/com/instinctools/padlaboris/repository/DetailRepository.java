@@ -35,5 +35,5 @@ public interface DetailRepository extends JpaRepository<Detail, Integer> {
             "weight=?3,bmi=?4,blood_type=?5,RH=?6," +
             "degree_of_disability=?7 WHERE detail_id = ?1", nativeQuery = true)
     void updateById(Integer id, double height, double weight, double bMI,
-                    Integer blood_type, String RH, Integer degreeOfDisability);
+                    int blood_type, String RH, int degreeOfDisability);
 }
