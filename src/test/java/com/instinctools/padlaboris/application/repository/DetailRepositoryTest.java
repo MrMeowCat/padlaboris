@@ -37,7 +37,7 @@ public class DetailRepositoryTest {
 
         final String content = "+";
 
-        List<Detail> detail = detailRepository.findByRhesusFactor(content);
+        final List<Detail> detail = detailRepository.findByRhesusFactor(content);
 
         assertThat(detail.get(0).getRhesusFactor(), Is.is(content));
     }
@@ -47,7 +47,7 @@ public class DetailRepositoryTest {
 
         final Integer content = 1;
 
-        List<Detail> detail = detailRepository.findByBloodType(content);
+        final List<Detail> detail = detailRepository.findByBloodType(content);
 
         assertThat(detail.get(0).getBloodType(), Is.is(content));
     }

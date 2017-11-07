@@ -16,7 +16,6 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultPatientService implements PatientService {
 
@@ -72,16 +71,18 @@ public class DefaultPatientService implements PatientService {
     }
 
     @Override
-    public void updateById(Integer id, Patient patient) {
+    public Patient updateById(final Integer id, final Patient patient) {
 
-        Patient saved = patientRepository.findOne(id);
+        final Patient saved = patientRepository.findOne(id);
+
         patientRepository.updateById(id,
                 Objects.isNull(patient.getLastName()) ? saved.getLastName() : patient.getLastName(),
                 Objects.isNull(patient.getFirstName()) ? saved.getFirstName() : patient.getFirstName(),
-                Objects.isNull(patient.getBirthDate()) ? saved.getBirthDate() : patient.getBirthDate(),
                 Objects.isNull(patient.getGender()) ? saved.getGender() : patient.getGender(),
                 Objects.isNull(patient.getHomeNumber()) ? saved.getHomeNumber() : patient.getHomeNumber(),
                 Objects.isNull(patient.getMobileNumber()) ? saved.getMobileNumber() : patient.getMobileNumber(),
                 Objects.isNull(patient.getDeathDate()) ? saved.getDeathDate() : patient.getDeathDate());
+
+        return saved;
     }
 }

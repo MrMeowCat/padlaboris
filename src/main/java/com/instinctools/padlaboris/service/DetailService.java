@@ -9,13 +9,7 @@ import java.util.List;
  */
 public interface DetailService {
 
-    /**
-     * Method for add detail to database.
-     *
-     * @param detail Detail detail.
-     * @return object of the added Detail class
-     */
-    Detail create(Detail detail);
+    Detail create(Integer id, Detail detail);
 
     /**
      * Method for display detail from database by id.
@@ -49,11 +43,18 @@ public interface DetailService {
     List<Detail> findByBloodType(Integer bloodType);
 
     /**
-     * Method for display all details from data base.
+     * Method for display all details from database.
      *
      * @return List of Detail objects.
      */
     List<Detail> listDetails();
 
-    void updateById(Integer id,Detail detail);
+    /**
+     * Method for update detail from database.
+     *
+     * @param id     Detail id.
+     * @param detail Detail detail.
+     * @return updated Detail detail.
+     */
+    Detail updateById(Integer id, Detail detail);
 }

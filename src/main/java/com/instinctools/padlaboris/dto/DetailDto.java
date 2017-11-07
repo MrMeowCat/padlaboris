@@ -29,7 +29,7 @@ public class DetailDto implements Serializable {
     private double weight;
 
     @JsonProperty
-    private double bMI;
+    private double bmi;
 
     @JsonProperty
     private int bloodType;

@@ -5,12 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Interface for working with the database.
  */
+@Transactional
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     /**
@@ -35,13 +37,12 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Modifying
     @Query(value = "UPDATE patients SET last_name=?2,"
             + "first_name=?3,"
-            + "birth_date=?4,"
-            + "gender=?5,"
-            + "home_number=?6,"
-            + "mobile_number=?7,"
-            + "death_date=?8"
+            + "gender=?4,"
+            + "home_number=?5,"
+            + "mobile_number=?6,"
+            + "death_date=?7"
             + " WHERE patient_id = ?1", nativeQuery = true)
-    void updateById(Integer id, String lastName, String firstName, Date birthDate,
+    void updateById(Integer id, String lastName, String firstName,
                     String gender, String homeNumber,
                     String mobileNumber, Date deathDate);
 }

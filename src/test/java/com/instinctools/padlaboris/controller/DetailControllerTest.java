@@ -2,7 +2,6 @@ package com.instinctools.padlaboris.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.instinctools.padlaboris.dto.DetailDto;
-import com.instinctools.padlaboris.dto.PatientDto;
 import com.instinctools.padlaboris.model.Detail;
 import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
@@ -33,7 +32,7 @@ public class DetailControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Autowired
     private WebApplicationContext webAppConfiguration;
@@ -41,11 +40,16 @@ public class DetailControllerTest {
     @Autowired
     private DetailRepository detailRepository;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     private DetailDto detailDto;
 
     private Detail detail;
 
     private Integer id;
+
+    private Integer patientId;
 
     private Integer bloodType;
 
@@ -54,20 +58,23 @@ public class DetailControllerTest {
     @Before
     public void setUp() throws Exception {
 
+        final Patient patient = new Patient();
+
+        patientId = patientRepository.save(patient).getId();
+
         detail = new Detail();
         detail.setBloodType(1);
-        detail.setBMI(2);
+        detail.setBmi(2);
         detail.setRhesusFactor("+");
 
         id = detailRepository.save(detail).getId();
 
         bloodType = detailRepository.findOne(id).getBloodType();
 
-        rh=detailRepository.findOne(id).getRhesusFactor();
-
+        rh = detailRepository.findOne(id).getRhesusFactor();
 
         detailDto = new DetailDto();
-        detailDto.setBMI(2);
+        detailDto.setBmi(2);
         detailDto.setBloodType(2);
 
         mockMvc = MockMvcBuilders
@@ -77,63 +84,47 @@ public class DetailControllerTest {
 
     @Test
     public void createDetail() throws Exception {
-        mockMvc.perform(request(POST, "/details")
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-                .content(objectMapper.writeValueAsString(detailDto))
-                .contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.bmi", is(detailDto.getBMI())))
-                .andExpect(jsonPath("$.bloodType", is(detailDto.getBloodType())));
-    }
 
-    @Test
-    public void updateDetail() throws Exception
-    {
-        detailDto.setBloodType(3);
-        detailDto.setRhesusFactor("-");
-
-        mockMvc.perform(request(PUT, "/details/"+id)
+        mockMvc.perform(request(POST, "/patients/" + patientId + "/details")
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .content(objectMapper.writeValueAsString(detailDto))
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.rhesusFactor", is(detailDto.getRhesusFactor())))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.bmi", is(detailDto.getBmi())))
                 .andExpect(jsonPath("$.bloodType", is(detailDto.getBloodType())));
-
     }
 
     @Test
     public void fetchDetail() throws Exception {
 
-        mockMvc.perform(request(GET,"/details/"+id)
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-        .contentType(APPLICATION_JSON_UTF8_VALUE))
+        mockMvc.perform(request(GET, "/patients/" + patientId + "/details/" + id)
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bmi", is(detail.getBMI())))
+                .andExpect(jsonPath("$.bmi", is(detail.getBmi())))
                 .andExpect(jsonPath("$.bloodType", is(detail.getBloodType())));
     }
 
     @Test
     public void fetchAllDetails() throws Exception {
 
-        mockMvc.perform(request(GET,"/details")
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-        .contentType(APPLICATION_JSON_UTF8_VALUE))
+        mockMvc.perform(request(GET, "/details")
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].bmi",is(detail.getBMI())))
-                .andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
+                .andExpect(jsonPath("$.[0].bmi", is(detail.getBmi())))
+                .andExpect(jsonPath("$.[0].bloodType", is(detail.getBloodType())));
     }
 
     @Test
     public void deleteDetail() throws Exception {
 
-        mockMvc.perform(request(DELETE,"/details/"+id)
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-        .contentType(APPLICATION_JSON_UTF8_VALUE))
+        mockMvc.perform(request(DELETE, "/patients/" + patientId + "/details/" + id)
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
         assertThat(detailRepository.exists(id), Is.is(false));
@@ -142,24 +133,24 @@ public class DetailControllerTest {
     @Test
     public void fetchByBloodType() throws Exception {
 
-        mockMvc.perform(request(GET,"/details/bloodType/"+bloodType)
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-        .contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].bmi",is(detail.getBMI())))
-                .andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
-    }
-
-   @Test
-   public void fetchByBMI() throws Exception {
-        mockMvc.perform(request(GET,"/details/rh/"+rh)
+        mockMvc.perform(request(GET, "/patients/" + patientId + "/details/bloodType/" + bloodType)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].rhesusFactor",is(detail.getRhesusFactor())))
-                .andExpect(jsonPath("$.[0].bloodType",is(detail.getBloodType())));
+                .andExpect(jsonPath("$.[0].bmi", is(detail.getBmi())))
+                .andExpect(jsonPath("$.[0].bloodType", is(detail.getBloodType())));
+    }
+
+    @Test
+    public void fetchByBMI() throws Exception {
+        mockMvc.perform(request(GET, "/patients/" + patientId + "/details/rh/" + rh)
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].rhesusFactor", is(detail.getRhesusFactor())))
+                .andExpect(jsonPath("$.[0].bloodType", is(detail.getBloodType())));
     }
 
 }

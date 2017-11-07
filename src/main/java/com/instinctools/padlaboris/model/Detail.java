@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
 import java.util.Objects;
 
 /**
@@ -34,7 +33,7 @@ public class Detail implements Persistable<Integer> {
     private double weight;
 
     @Column(name = "bmi")
-    private double bMI;
+    private double bmi;
 
     @Column(name = "blood_type")
     private int bloodType;

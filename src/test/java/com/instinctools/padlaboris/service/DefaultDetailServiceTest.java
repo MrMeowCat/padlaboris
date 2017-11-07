@@ -26,15 +26,24 @@ public class DefaultDetailServiceTest {
     @Autowired
     private DetailRepository detailRepository;
 
+    @Autowired
+    private PatientRepository patientRepository;
+
+    private Integer patientId;
+
     private Integer id;
 
     @Before
     public void setUp() throws Exception {
 
+        final Patient patient = new Patient();
+
+        patientId = patientRepository.save(patient).getId();
+
         final Detail detail = new Detail();
 
         detail.setBloodType(1);
-        detail.setBMI(1.25);
+        detail.setBmi(1.25);
         detail.setRhesusFactor("+");
 
         id = detailRepository.save(detail).getId();
@@ -49,7 +58,7 @@ public class DefaultDetailServiceTest {
 
         createDetail.setBloodType(content);
 
-        detailService.create(createDetail);
+        detailService.create(patientId, createDetail);
 
         assertThat(detailRepository.findByBloodType(content).get(0).getBloodType(), Is.is(content));
     }
@@ -59,7 +68,7 @@ public class DefaultDetailServiceTest {
 
         final double content = 1.25;
 
-        assertThat(detailService.fetch(id).getBMI(), Is.is(content));
+        assertThat(detailService.fetch(id).getBmi(), Is.is(content));
     }
 
     @Test
@@ -72,7 +81,7 @@ public class DefaultDetailServiceTest {
 
         updateDetail.setBloodType(content);
 
-        detailService.updateById(id,updateDetail);
+        detailService.updateById(id, updateDetail);
 
         assertThat(detailRepository.findOne(id).getBloodType(), Is.is(content));
     }

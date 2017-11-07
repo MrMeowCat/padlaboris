@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- *
+ * Rest Controller for Detail.
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -23,37 +23,57 @@ public class DetailController {
 
     private final DetailService detailService;
 
-    private DozerBeanMapper dozerBeanMapper;
+    /**
+     * Mapper for convert DetailDto to Detail and back.
+     */
+    private final DozerBeanMapper dozerBeanMapper;
 
-    @RequestMapping(value = "/details", method = RequestMethod.POST)
-    public ResponseEntity createDetail(@RequestBody final DetailDto detailDto) {
+    /**
+     * Method for creating Detail.
+     *
+     * @param detailDto DetailDto detailDto.
+     * @param patientId Patient patientId.
+     * @return created DetailDto detailDto.
+     */
+    @RequestMapping(value = "/patients/{patientId}/details", method = RequestMethod.POST)
+    public ResponseEntity createDetail(@RequestBody final DetailDto detailDto, @PathVariable final Integer patientId) {
 
-        dozerBeanMapper = new DozerBeanMapper();
+        final Detail detailToCreate = dozerBeanMapper.map(detailDto, Detail.class);
 
-        DetailDto response = dozerBeanMapper.map(detailService.create(dozerBeanMapper.map(detailDto, Detail.class)),
-                DetailDto.class);
+        final Detail detailToResponse = detailService.create(patientId, detailToCreate);
+
+        final DetailDto response = dozerBeanMapper.map(detailToResponse, DetailDto.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @RequestMapping(value = "/details/{id}", method = RequestMethod.PUT)
-    public ResponseEntity updateDetail(@RequestBody final DetailDto detailDto, @PathVariable Integer id) {
+    /**
+     * Method for updating Detail.
+     *
+     * @param detailDto DetailDto detailDto.
+     * @param id        Detail id.
+     * @return updated DetailDto detailDto.
+     */
+    @RequestMapping(value = "/patients/{patientId}/details/{id}", method = RequestMethod.PUT)
+    public ResponseEntity updateDetail(@RequestBody final DetailDto detailDto, @PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Detail detailToUpdate = dozerBeanMapper.map(detailDto, Detail.class);
 
-        Detail detail = dozerBeanMapper.map(detailDto, Detail.class);
+        final Detail detailToResponse = detailService.updateById(id, detailToUpdate);
 
-        detailService.updateById(id, detail);
+        final DetailDto response = dozerBeanMapper.map(detailToResponse, DetailDto.class);
 
-        return ResponseEntity.ok().body(dozerBeanMapper.map(detailService.fetch(id), DetailDto.class));
+        return ResponseEntity.ok().body(response);
     }
 
-    @RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/patients/{patientId}/details/{id}", method = RequestMethod.GET)
     public ResponseEntity fetchDetail(@PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Detail detailToResponse = detailService.fetch(id);
 
-        return ResponseEntity.ok().body(dozerBeanMapper.map(detailService.fetch(id), DetailDto.class));
+        final DetailDto response = dozerBeanMapper.map(detailToResponse, DetailDto.class);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)
@@ -62,25 +82,31 @@ public class DetailController {
         return ResponseEntity.ok().body(detailService.listDetails());
     }
 
-    @RequestMapping(value = "/details/{id}", method = RequestMethod.DELETE)
+    /**
+     * Method for deleting Detail from database.
+     *
+     * @param id Detail id.
+     * @return deleted DetailDto detailDto.
+     */
+    @RequestMapping(value = "/patients/{patientId}/details/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteDetail(@PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Detail detailToResponse = detailService.fetch(id);
 
-        final DetailDto response = dozerBeanMapper.map(detailService.fetch(id), DetailDto.class);
+        final DetailDto response = dozerBeanMapper.map(detailToResponse, DetailDto.class);
 
         detailService.delete(id);
 
         return ResponseEntity.ok().body(response);
     }
 
-    @RequestMapping(value = "/details/bloodType/{bloodType}", method = RequestMethod.GET)
+    @RequestMapping(value = "/patients/{patientId}/details/bloodType/{bloodType}", method = RequestMethod.GET)
     public ResponseEntity fetchByBloodType(@PathVariable final Integer bloodType) {
 
         return ResponseEntity.ok().body(detailService.findByBloodType(bloodType));
     }
 
-    @RequestMapping(value = "/details/rh/{rhesusFactor}", method = RequestMethod.GET)
+    @RequestMapping(value = "/patients/{patientId}/details/rh/{rhesusFactor}", method = RequestMethod.GET)
     public ResponseEntity fetchByRhesusFactor(@PathVariable final String rhesusFactor) {
 
         return ResponseEntity.ok().body(detailService.findByRhesusFactor(rhesusFactor));

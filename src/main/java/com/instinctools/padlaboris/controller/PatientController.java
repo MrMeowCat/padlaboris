@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * Patient controller.
+ * Rest Controller for Patient.
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -24,27 +24,27 @@ public class PatientController {
     private final PatientService patientService;
 
     /**
-     * Mapper for convert Patient to PatientDto and back.
+     * Mapper for convert PatientDto to Patient and back.
      */
-    private DozerBeanMapper dozerBeanMapper;
+    private final DozerBeanMapper dozerBeanMapper;
 
     /**
-     * Method for update Patient from data base.
+     * Method for updating Patient.
      *
      * @param patientDto PatientDto patientDto.
-     * @param id Patient id.
-     * @return updated Patient class object which transformed to PatientDto.
+     * @param id         Patient id.
+     * @return created PatientDto patientDto.
      */
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody final PatientDto patientDto, @PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Patient patientToUpdate = dozerBeanMapper.map(patientDto, Patient.class);
 
-       final Patient patient = dozerBeanMapper.map(patientDto, Patient.class);
+        final Patient patientToResponse = patientService.updateById(id, patientToUpdate);
 
-        patientService.updateById(id, patient);
+        final PatientDto response = dozerBeanMapper.map(patientToResponse, PatientDto.class);
 
-        return ResponseEntity.ok().body(dozerBeanMapper.map(patientService.fetch(id), PatientDto.class));
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
@@ -56,28 +56,43 @@ public class PatientController {
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public ResponseEntity fetchPatient(@PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Patient patientToResponse = patientService.fetch(id);
 
-        return ResponseEntity.ok().body(dozerBeanMapper.map(patientService.fetch(id), PatientDto.class));
+        final PatientDto response = dozerBeanMapper.map(patientToResponse, PatientDto.class);
+
+        return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for creating Patient.
+     *
+     * @param patientDto PatientDto.
+     * @return created PatientDto patientDto.
+     */
     @RequestMapping(value = "/patients", method = RequestMethod.POST)
     public ResponseEntity createPatient(@RequestBody final PatientDto patientDto) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Patient patientToCreate = dozerBeanMapper.map(patientDto, Patient.class);
 
-        final PatientDto response = dozerBeanMapper.map(patientService.create(dozerBeanMapper.map(patientDto, Patient.class)),
-                PatientDto.class);
+        final Patient patientToResponse = patientService.create(patientToCreate);
+
+        final PatientDto response = dozerBeanMapper.map(patientToResponse, PatientDto.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    /**
+     * Method for deleting Patient from database.
+     *
+     * @param id Patient id.
+     * @return deleted PatientDto patientDto.
+     */
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deletePatient(@PathVariable final Integer id) {
 
-        this.dozerBeanMapper = new DozerBeanMapper();
+        final Patient patientToResponse = patientService.fetch(id);
 
-        final PatientDto response = dozerBeanMapper.map(patientService.fetch(id), PatientDto.class);
+        final PatientDto response = dozerBeanMapper.map(patientToResponse, PatientDto.class);
 
         patientService.delete(id);
 

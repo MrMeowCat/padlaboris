@@ -31,7 +31,7 @@ public class PatientControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Autowired
     private WebApplicationContext webAppConfiguration;
@@ -61,6 +61,7 @@ public class PatientControllerTest {
         id = patientRepository.save(patient).getId();
         lastName = patientRepository.findOne(id).getLastName();
         gender = patientRepository.findOne(id).getGender();
+
         patientDto = new PatientDto();
 
         patientDto.setFirstName("dtoFirstName");
@@ -85,23 +86,8 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void updatePatient()throws Exception
-    {
-        patientDto.setLastName("update");
-        patientDto.setFirstName("update");
-
-        mockMvc.perform(request(PUT,"/patients/"+id)
-        .accept(APPLICATION_JSON_UTF8_VALUE)
-        .content(objectMapper.writeValueAsString(patientDto))
-        .contentType(APPLICATION_JSON_UTF8_VALUE))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName",is(patientDto.getFirstName())))
-                .andExpect(jsonPath("$.lastName",is(patientDto.getLastName())));
-    }
-
-    @Test
     public void deletePatient() throws Exception {
+
         mockMvc.perform(request(DELETE, "/patients/" + id)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
@@ -112,6 +98,7 @@ public class PatientControllerTest {
 
     @Test
     public void fetchPatient() throws Exception {
+
         mockMvc.perform(request(GET, "/patients/" + id)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
@@ -123,6 +110,7 @@ public class PatientControllerTest {
 
     @Test
     public void fetchByGender() throws Exception {
+
         mockMvc.perform(request(GET, "/patients/gender/" + gender)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
@@ -133,6 +121,7 @@ public class PatientControllerTest {
 
     @Test
     public void fetchByLastName() throws Exception {
+
         mockMvc.perform(request(GET, "/patients/lastName/" + lastName)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
@@ -143,6 +132,7 @@ public class PatientControllerTest {
 
     @Test
     public void fetchAll() throws Exception {
+
         mockMvc.perform(request(GET, "/patients")
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))

@@ -3,7 +3,6 @@ package com.instinctools.padlaboris.service;
 import com.instinctools.padlaboris.model.Detail;
 import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
-import com.instinctools.padlaboris.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultDetailService implements DetailService {
 
@@ -27,15 +25,15 @@ public class DefaultDetailService implements DetailService {
     private final PatientService patientService;
 
     @Override
-    public Detail create(final Detail detail) {
+    public Detail create(final Integer id, final Detail detail) {
 
         log.info("Detail added to database.");
 
-        Patient patient=patientService.fetch(1);
+        final Patient patient = patientService.fetch(id);
 
         patient.setDetails(detail);
 
-        patientService.updateById(1,patient);
+        patientService.updateById(id, patient);
 
         return detailRepository.save(detail);
     }
@@ -82,7 +80,7 @@ public class DefaultDetailService implements DetailService {
     }
 
     @Override
-    public void updateById(final Integer id, final Detail detail) {
+    public Detail updateById(final Integer id, final Detail detail) {
 
         log.info("Detail updated.");
 
@@ -91,10 +89,12 @@ public class DefaultDetailService implements DetailService {
         detailRepository.updateById(id,
                 detail.getHeight() == 0 ? saved.getHeight() : detail.getHeight(),
                 detail.getWeight() == 0 ? saved.getWeight() : detail.getWeight(),
-                detail.getBMI() == 0 ? saved.getBMI() : detail.getBMI(),
+                detail.getBmi() == 0 ? saved.getBmi() : detail.getBmi(),
                 detail.getBloodType() == 0 ? saved.getBloodType() : detail.getBloodType(),
                 Objects.isNull(detail.getRhesusFactor()) ? saved.getRhesusFactor() : detail.getRhesusFactor(),
-                detail.getDegreeOfDisability()==0 ?
-                        saved.getDegreeOfDisability() : detail.getDegreeOfDisability());
+                detail.getDegreeOfDisability() == 0
+                        ? saved.getDegreeOfDisability() : detail.getDegreeOfDisability());
+
+        return saved;
     }
 }

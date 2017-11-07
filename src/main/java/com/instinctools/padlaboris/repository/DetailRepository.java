@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Interface for working with the database.
  */
+@Transactional
 public interface DetailRepository extends JpaRepository<Detail, Integer> {
     /**
      * Method find details by rhesusFactor.
@@ -31,9 +32,9 @@ public interface DetailRepository extends JpaRepository<Detail, Integer> {
     List<Detail> findByBloodType(Integer bloodType);
 
     @Modifying
-    @Query(value = "UPDATE details SET height=?2," +
-            "weight=?3,bmi=?4,blood_type=?5,RH=?6," +
-            "degree_of_disability=?7 WHERE detail_id = ?1", nativeQuery = true)
+    @Query(value = "UPDATE details SET height=?2,"
+            + "weight=?3,bmi=?4,blood_type=?5,RH=?6,"
+            + "degree_of_disability=?7 WHERE detail_id = ?1", nativeQuery = true)
     void updateById(Integer id, double height, double weight, double bMI,
-                    int blood_type, String RH, int degreeOfDisability);
+                    int bloodType, String rH, int degreeOfDisability);
 }

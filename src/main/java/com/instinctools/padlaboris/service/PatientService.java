@@ -55,5 +55,12 @@ public interface PatientService {
      */
     List<Patient> listPatients();
 
-    void updateById(Integer id, Patient patient);
+    /**
+     * Method for update patient from database.
+     *
+     * @param id      Patient id.
+     * @param patient Patient patient.
+     * @return updated Patient patient.
+     */
+    Patient updateById(Integer id, Patient patient);
 }
