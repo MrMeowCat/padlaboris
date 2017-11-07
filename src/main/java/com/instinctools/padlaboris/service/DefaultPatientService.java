@@ -1,6 +1,6 @@
 package com.instinctools.padlaboris.service;
 
-import com.instinctools.padlaboris.aspect.Loggable;
+import com.instinctools.padlaboris.aspect.Auditing;
 import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,6 @@ public class DefaultPatientService implements PatientService {
 
     private final PatientRepository patientRepository;
 
-    @Loggable
     @Override
     public Patient create(final Patient patient) {
 
@@ -31,7 +30,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.save(patient);
     }
 
-    @Loggable
     @Override
     public Patient fetch(final Integer id) {
 
@@ -40,7 +38,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.findOne(id);
     }
 
-    @Loggable
     @Override
     public Patient update(final Patient patient) {
 
@@ -49,7 +46,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.save(patient);
     }
 
-    @Loggable
     @Override
     public void delete(final Integer id) {
 
@@ -58,7 +54,6 @@ public class DefaultPatientService implements PatientService {
         patientRepository.delete(id);
     }
 
-    @Loggable
     @Override
     public List<Patient> findByLastName(final String lastName) {
 
@@ -67,7 +62,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.findByLastName(lastName);
     }
 
-    @Loggable
     @Override
     public List<Patient> findByGender(final String gender) {
 
@@ -76,7 +70,6 @@ public class DefaultPatientService implements PatientService {
         return patientRepository.findByGender(gender);
     }
 
-    @Loggable
     @Override
     public List<Patient> listPatients() {
 
