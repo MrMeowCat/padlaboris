@@ -6,8 +6,16 @@ import lombok.NoArgsConstructor;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.data.domain.Persistable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
+/**
+ * Entity that describes the diseases.
+ */
 @Entity
 @Table(name = "diseases")
 @Data
