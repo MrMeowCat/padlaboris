@@ -8,6 +8,5 @@ public class LoggingPointcut {
 
     @Pointcut("execution(* com.instinctools.padlaboris.service.*(..))")
     public void logService() {
-
     }
 }
