@@ -1,6 +1,5 @@
-package com.instinctools.padlaboris.service;
+package com.instinctools.padlaboris.aspect;
 
-import com.instinctools.padlaboris.aspect.Auditing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,5 +13,4 @@ public class LoggerBaseAuditor implements Auditing {
     public void logService(final String service, final String method, final String args) {
         LOGGER.info("Audit Log from Service: {} - from Method: {} - Args: {}", service, method, args);
     }
-
 }
