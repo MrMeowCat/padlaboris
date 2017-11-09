@@ -1,2 +1,9 @@
 server:
   port: 9090
+
+#DataBase
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Padla_Boris_DB
+    username: Padla_Boris
+    password: Padla_Boris

@@ -51,21 +51,26 @@ public class DetailController {
      * Method for updating Detail.
      *
      * @param detailDto DetailDto detailDto.
-     * @param id        Detail id.
      * @return updated DetailDto detailDto.
      */
-    @RequestMapping(value = "/patients/{patientId}/details/{id}", method = RequestMethod.PUT)
-    public ResponseEntity updateDetail(@RequestBody final DetailDto detailDto, @PathVariable final Integer id) {
+    @RequestMapping(value = "/patients/{patientId}/details", method = RequestMethod.PUT)
+    public ResponseEntity updateDetail(@RequestBody final DetailDto detailDto) {
 
         final Detail detailToUpdate = dozerBeanMapper.map(detailDto, Detail.class);
 
-        final Detail detailToResponse = detailService.updateById(id, detailToUpdate);
+        final Detail detailToResponse = detailService.update(detailToUpdate);
 
         final DetailDto response = dozerBeanMapper.map(detailToResponse, DetailDto.class);
 
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for displaying Details.
+     *
+     * @param id Detail id.
+     * @return DetailDto response which want displayed.
+     */
     @RequestMapping(value = "/patients/{patientId}/details/{id}", method = RequestMethod.GET)
     public ResponseEntity fetchDetail(@PathVariable final Integer id) {
 
