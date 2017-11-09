@@ -6,7 +6,6 @@ import com.instinctools.padlaboris.model.Detail;
 import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.DetailRepository;
 import com.instinctools.padlaboris.repository.PatientRepository;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +17,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.springframework.http.HttpMethod.*;
+import static org.junit.Assert.assertThat;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,6 +60,7 @@ public class DetailControllerTest {
     @Before
     public void setUp() throws Exception {
 
+        patientRepository.deleteAll();
         final Patient patient = new Patient();
 
         patientId = patientRepository.save(patient).getId();
@@ -96,6 +99,21 @@ public class DetailControllerTest {
     }
 
     @Test
+    public void updateDetail() throws Exception {
+
+        detailDto.setId(id);
+        detailDto.setBloodType(1);
+
+        mockMvc.perform(request(PUT, "/patients/" + patientId + "/details")
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .content(objectMapper.writeValueAsString(detailDto))
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.bloodType", is(detailDto.getBloodType())));
+    }
+
+    @Test
     public void fetchDetail() throws Exception {
 
         mockMvc.perform(request(GET, "/patients/" + patientId + "/details/" + id)
@@ -115,7 +133,7 @@ public class DetailControllerTest {
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].bmi", is(detail.getBmi())))
+                .andExpect(jsonPath("$.[0].rhesusFactor", is(detail.getRhesusFactor())))
                 .andExpect(jsonPath("$.[0].bloodType", is(detail.getBloodType())));
     }
 
@@ -127,7 +145,7 @@ public class DetailControllerTest {
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
-        assertThat(detailRepository.exists(id), Is.is(false));
+        assertThat(detailRepository.exists(id), is(false));
     }
 
     @Test
@@ -138,12 +156,11 @@ public class DetailControllerTest {
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].bmi", is(detail.getBmi())))
                 .andExpect(jsonPath("$.[0].bloodType", is(detail.getBloodType())));
     }
 
     @Test
-    public void fetchByBMI() throws Exception {
+    public void fetchByRH() throws Exception {
         mockMvc.perform(request(GET, "/patients/" + patientId + "/details/rh/" + rh)
                 .accept(APPLICATION_JSON_UTF8_VALUE)
                 .contentType(APPLICATION_JSON_UTF8_VALUE))

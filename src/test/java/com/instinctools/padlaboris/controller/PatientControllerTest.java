@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.instinctools.padlaboris.dto.PatientDto;
 import com.instinctools.padlaboris.model.Patient;
 import com.instinctools.padlaboris.repository.PatientRepository;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -52,6 +54,7 @@ public class PatientControllerTest {
     @Before
     public void setUp() throws Exception {
 
+        patientRepository.deleteAll();
         patient = new Patient();
 
         patient.setLastName("patientLastName");
@@ -59,6 +62,7 @@ public class PatientControllerTest {
         patient.setGender("m");
 
         id = patientRepository.save(patient).getId();
+
         lastName = patientRepository.findOne(id).getLastName();
         gender = patientRepository.findOne(id).getGender();
 
@@ -86,6 +90,21 @@ public class PatientControllerTest {
     }
 
     @Test
+    public void updatePatient() throws Exception {
+
+        patientDto.setFirstName("updateDtoFirstName");
+        patientDto.setId(id);
+
+        mockMvc.perform(request(PUT, "/patients")
+                .accept(APPLICATION_JSON_UTF8_VALUE)
+                .content(objectMapper.writeValueAsString(patientDto))
+                .contentType(APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", is(patientDto.getFirstName())));
+    }
+
+    @Test
     public void deletePatient() throws Exception {
 
         mockMvc.perform(request(DELETE, "/patients/" + id)
@@ -93,7 +112,7 @@ public class PatientControllerTest {
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
-        assertThat(patientRepository.exists(id), Is.is(false));
+        assertThat(patientRepository.exists(id), is(false));
     }
 
     @Test
@@ -138,6 +157,7 @@ public class PatientControllerTest {
                 .contentType(APPLICATION_JSON_UTF8_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id", is(id)))
                 .andExpect(jsonPath("$.[0].lastName", is(patient.getLastName())))
                 .andExpect(jsonPath("$.[0].firstName", is(patient.getFirstName())))
                 .andExpect(jsonPath("$.[0].gender", is(patient.getGender())));
