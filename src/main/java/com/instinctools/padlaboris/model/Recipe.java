@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.aop.ClassFilter;
-import org.springframework.aop.MethodMatcher;
-import org.springframework.aop.Pointcut;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.Column;
@@ -63,5 +60,4 @@ public class Recipe implements Persistable<Integer> {
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "MEDICAL_DOCTOR")
 //    private String md;
-
 }
