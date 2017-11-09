@@ -52,9 +52,8 @@ public interface DetailService {
     /**
      * Method for update detail from database.
      *
-     * @param id     Detail id.
      * @param detail Detail detail.
      * @return updated Detail detail.
      */
-    Detail updateById(Integer id, Detail detail);
+    Detail update(Detail detail);
 }

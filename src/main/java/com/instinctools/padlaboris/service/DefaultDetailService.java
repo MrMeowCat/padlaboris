@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * class that implements the Detail's work and databases.
@@ -33,7 +31,7 @@ public class DefaultDetailService implements DetailService {
 
         patient.setDetails(detail);
 
-        patientService.updateById(id, patient);
+        patientService.update(patient);
 
         return detailRepository.save(detail);
     }
@@ -74,27 +72,28 @@ public class DefaultDetailService implements DetailService {
     @Override
     public List<Detail> listDetails() {
 
-        log.info("All patients were displayed");
+        log.info("All details were displayed");
 
         return detailRepository.findAll();
     }
 
     @Override
-    public Detail updateById(final Integer id, final Detail detail) {
+    @SuppressWarnings("PMD.NPathComplexity")
+    public Detail update(final Detail detail) {
 
-        log.info("Detail updated.");
+        log.info("Details were updated");
 
-        final Detail saved = detailRepository.findOne(id);
+        final Detail saved = detailRepository.findOne(detail.getId());
 
-        detailRepository.updateById(id,
-                detail.getHeight() == 0 ? saved.getHeight() : detail.getHeight(),
-                detail.getWeight() == 0 ? saved.getWeight() : detail.getWeight(),
-                detail.getBmi() == 0 ? saved.getBmi() : detail.getBmi(),
-                detail.getBloodType() == 0 ? saved.getBloodType() : detail.getBloodType(),
-                Objects.isNull(detail.getRhesusFactor()) ? saved.getRhesusFactor() : detail.getRhesusFactor(),
-                detail.getDegreeOfDisability() == 0
-                        ? saved.getDegreeOfDisability() : detail.getDegreeOfDisability());
+        detail.setBmi(detail.getBmi() == 0 ? saved.getBmi() : detail.getBmi());
+        detail.setRhesusFactor(detail.getRhesusFactor() == null ? saved.getRhesusFactor() : detail.getRhesusFactor());
+        detail.setWeight(detail.getWeight() == 0 ? saved.getWeight() : detail.getWeight());
+        detail.setHeight(detail.getHeight() == 0 ? saved.getHeight() : detail.getHeight());
+        detail.setBloodType(detail.getBloodType() == 0 ? saved.getBloodType() : detail.getBloodType());
+        detail.setDegreeOfDisability(detail.getDegreeOfDisability() == 0 ? saved.getDegreeOfDisability()
+                : detail.getDegreeOfDisability());
+        detail.setPatientId(detail.getPatientId() == null ? saved.getPatientId() : detail.getPatientId());
 
-        return saved;
+        return detailRepository.save(detail);
     }
 }

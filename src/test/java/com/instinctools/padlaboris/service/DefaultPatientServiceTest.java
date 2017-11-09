@@ -60,7 +60,9 @@ public class DefaultPatientServiceTest {
 
         updatePatient.setLastName(content);
 
-        patientService.updateById(id, updatePatient);
+        updatePatient.setId(id);
+
+        patientService.update(updatePatient);
 
         assertThat(patientRepository.findOne(id).getLastName(), Is.is(content));
     }

@@ -58,9 +58,8 @@ public interface PatientService {
     /**
      * Method for update patient from database.
      *
-     * @param id      Patient id.
      * @param patient Patient patient.
      * @return updated Patient patient.
      */
-    Patient updateById(Integer id, Patient patient);
+    Patient update(Patient patient);
 }
