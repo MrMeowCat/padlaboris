@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+/**
+ * Logging Advisor.
+ */
 @Aspect
 @Component
 public class LoggingAdvisor {
