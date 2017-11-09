@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * class that implements the Patient's work and databases.
@@ -69,18 +68,21 @@ public class DefaultPatientService implements PatientService {
     }
 
     @Override
-    public Patient updateById(final Integer id, final Patient patient) {
+    @SuppressWarnings("PMD.NPathComplexity")
+    public Patient update(final Patient patient) {
 
-        final Patient saved = patientRepository.findOne(id);
+        log.info("Patient was updated.");
 
-        patientRepository.updateById(id,
-                Objects.isNull(patient.getLastName()) ? saved.getLastName() : patient.getLastName(),
-                Objects.isNull(patient.getFirstName()) ? saved.getFirstName() : patient.getFirstName(),
-                Objects.isNull(patient.getGender()) ? saved.getGender() : patient.getGender(),
-                Objects.isNull(patient.getHomeNumber()) ? saved.getHomeNumber() : patient.getHomeNumber(),
-                Objects.isNull(patient.getMobileNumber()) ? saved.getMobileNumber() : patient.getMobileNumber(),
-                Objects.isNull(patient.getDeathDate()) ? saved.getDeathDate() : patient.getDeathDate());
+        final Patient saved = patientRepository.findOne(patient.getId());
 
-        return saved;
+        patient.setDetails(patient.getDetails() == null ? saved.getDetails() : patient.getDetails());
+        patient.setGender(patient.getGender() == null ? saved.getGender() : patient.getGender());
+        patient.setFirstName(patient.getFirstName() == null ? saved.getFirstName() : patient.getFirstName());
+        patient.setLastName(patient.getLastName() == null ? saved.getLastName() : patient.getLastName());
+        patient.setDeathDate(patient.getDeathDate() == null ? saved.getDeathDate() : patient.getDeathDate());
+        patient.setMobileNumber(patient.getMobileNumber() == null ? saved.getMobileNumber() : patient.getMobileNumber());
+        patient.setHomeNumber(patient.getHomeNumber() == null ? saved.getHomeNumber() : patient.getHomeNumber());
+
+        return patientRepository.save(patient);
     }
 }

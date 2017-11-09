@@ -39,4 +39,7 @@ public class DetailDto implements Serializable {
 
     @JsonProperty
     private int degreeOfDisability;
+
+    @JsonProperty
+    private Integer patientId;
 }

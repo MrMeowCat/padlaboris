@@ -1,15 +1,14 @@
 package com.instinctools.padlaboris.model;
 
 import lombok.Data;
-import org.springframework.data.domain.Persistable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import java.util.Objects;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Entity which details the Patient.
@@ -17,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Data
 @Table(name = "details")
-public class Detail implements Persistable<Integer> {
+public class Detail implements Serializable {
 
     private static final long serialVersionUID = 529475928140022917L;
 
@@ -46,9 +45,4 @@ public class Detail implements Persistable<Integer> {
 
     @Column(name = "owner_id")
     private Integer patientId;
-
-    @Override
-    public boolean isNew() {
-        return Objects.nonNull(id);
-    }
 }

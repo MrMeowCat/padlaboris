@@ -2,21 +2,20 @@ package com.instinctools.padlaboris.model;
 
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.domain.Persistable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.TemporalType;
-import javax.persistence.Temporal;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 
 /**
@@ -25,7 +24,7 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "patients")
-public class Patient implements Persistable<Integer> {
+public class Patient implements Serializable {
 
     private static final long serialVersionUID = -3036693743601488048L;
 
@@ -63,9 +62,4 @@ public class Patient implements Persistable<Integer> {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", referencedColumnName = "detail_id")
     private Detail details;
-
-    @Override
-    public boolean isNew() {
-        return Objects.nonNull(id);
-    }
 }

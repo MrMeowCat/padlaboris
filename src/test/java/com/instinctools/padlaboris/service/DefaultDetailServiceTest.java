@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -72,7 +70,6 @@ public class DefaultDetailServiceTest {
     }
 
     @Test
-    @Transactional
     public void update() throws Exception {
 
         final Integer content = 3;
@@ -81,7 +78,9 @@ public class DefaultDetailServiceTest {
 
         updateDetail.setBloodType(content);
 
-        detailService.updateById(id, updateDetail);
+        updateDetail.setId(id);
+
+        detailService.update(updateDetail);
 
         assertThat(detailRepository.findOne(id).getBloodType(), Is.is(content));
     }

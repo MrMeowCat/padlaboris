@@ -32,15 +32,14 @@ public class PatientController {
      * Method for updating Patient.
      *
      * @param patientDto PatientDto patientDto.
-     * @param id         Patient id.
      * @return created PatientDto patientDto.
      */
-    @RequestMapping(value = "/patients/{id}", method = RequestMethod.PUT)
-    public ResponseEntity update(@RequestBody final PatientDto patientDto, @PathVariable final Integer id) {
+    @RequestMapping(value = "/patients", method = RequestMethod.PUT)
+    public ResponseEntity update(@RequestBody final PatientDto patientDto) {
 
         final Patient patientToUpdate = dozerBeanMapper.map(patientDto, Patient.class);
 
-        final Patient patientToResponse = patientService.updateById(id, patientToUpdate);
+        final Patient patientToResponse = patientService.update(patientToUpdate);
 
         final PatientDto response = dozerBeanMapper.map(patientToResponse, PatientDto.class);
 
@@ -53,6 +52,12 @@ public class PatientController {
         return ResponseEntity.ok().body(patientService.listPatients());
     }
 
+    /**
+     * Method for displaying Patient.
+     *
+     * @param id Patient id.
+     * @return PatentDto patientDto which want displayed.
+     */
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public ResponseEntity fetchPatient(@PathVariable final Integer id) {
 
