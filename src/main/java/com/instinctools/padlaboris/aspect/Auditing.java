@@ -4,7 +4,6 @@ package com.instinctools.padlaboris.aspect;
  * Auditing interface.
  */
 public interface Auditing {
-
     /**
      * Service logging audit.
      * @param service   service name
