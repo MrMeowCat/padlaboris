@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * class that implements the Disease's work and databases.
+ * Class that implements the Disease's work and databases.
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

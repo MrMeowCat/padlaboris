@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * class that implements the Detail's work and databases.
+ * Class that implements the Detail's work and databases.
  */
 @Service
 @Slf4j

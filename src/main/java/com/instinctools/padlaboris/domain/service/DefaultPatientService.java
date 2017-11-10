@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * class that implements the Patient's work and databases.
+ * Class that implements the Patient's work and databases.
  */
 @Service
 @Slf4j
