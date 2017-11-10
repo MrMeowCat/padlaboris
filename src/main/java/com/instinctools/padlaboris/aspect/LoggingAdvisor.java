@@ -1,5 +1,6 @@
 package com.instinctools.padlaboris.aspect;
 
+import com.instinctools.padlaboris.logging.Auditing;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,6 +1,6 @@
 package com.instinctools.padlaboris.config;
 
-import com.instinctools.padlaboris.interceptor.LoggerInterceptor;
+import com.instinctools.padlaboris.application.interceptor.LoggerInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
