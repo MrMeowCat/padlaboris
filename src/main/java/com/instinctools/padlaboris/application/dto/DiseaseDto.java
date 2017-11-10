@@ -21,4 +21,6 @@ public class DiseaseDto implements Serializable {
     private String diseaseCode;
     private String diseaseDescription;
     private String diseaseClass;
+    private Long startDate;
+    private Long endDate;
 }
