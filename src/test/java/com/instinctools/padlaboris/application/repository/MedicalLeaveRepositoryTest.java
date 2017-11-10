@@ -1,7 +1,7 @@
 package com.instinctools.padlaboris.application.repository;
 
-import com.instinctools.padlaboris.model.MedicalLeave;
-import com.instinctools.padlaboris.repository.MedicalLeaveRepository;
+import com.instinctools.padlaboris.domain.model.MedicalLeave;
+import com.instinctools.padlaboris.domain.repository.MedicalLeaveRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

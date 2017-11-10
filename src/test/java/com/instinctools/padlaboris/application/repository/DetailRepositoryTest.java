@@ -1,7 +1,7 @@
 package com.instinctools.padlaboris.application.repository;
 
-import com.instinctools.padlaboris.model.Detail;
-import com.instinctools.padlaboris.repository.DetailRepository;
+import com.instinctools.padlaboris.domain.model.Detail;
+import com.instinctools.padlaboris.domain.repository.DetailRepository;
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class DetailRepositoryTest {
     private DetailRepository detailRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         final Detail detail = new Detail();
 
@@ -33,7 +33,7 @@ public class DetailRepositoryTest {
     }
 
     @Test
-    public void findByRhesusFactor() throws Exception {
+    public void findByRhesusFactor() {
 
         final String content = "+";
 
@@ -43,7 +43,7 @@ public class DetailRepositoryTest {
     }
 
     @Test
-    public void findByBloodType() throws Exception {
+    public void findByBloodType() {
 
         final Integer content = 1;
 
@@ -51,5 +51,4 @@ public class DetailRepositoryTest {
 
         assertThat(detail.get(0).getBloodType(), Is.is(content));
     }
-
 }

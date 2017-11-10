@@ -1,7 +1,7 @@
 package com.instinctools.padlaboris.application.repository;
 
-import com.instinctools.padlaboris.model.Patient;
-import com.instinctools.padlaboris.repository.PatientRepository;
+import com.instinctools.padlaboris.domain.model.Patient;
+import com.instinctools.padlaboris.domain.repository.PatientRepository;
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class PatientRepositoryTest {
     }
 
     @Test
-    public void findByGender() throws Exception {
+    public void findByGender() {
 
         final String content = "male";
 
@@ -43,7 +43,7 @@ public class PatientRepositoryTest {
     }
 
     @Test
-    public void findByLastName() throws Exception {
+    public void findByLastName() {
 
         final String content = "lastName";
 
