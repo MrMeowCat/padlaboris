@@ -1,5 +1,6 @@
 package com.instinctools.padlaboris.domain.service;
 
+import com.instinctools.padlaboris.domain.exception.ResourceNotFoundException;
 import com.instinctools.padlaboris.domain.model.Disease;
 import com.instinctools.padlaboris.domain.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class DefaultDiseaseService implements DiseaseService {
 
     @Override
     public Disease findById(final Integer id) {
-        //todo custom exception
-        return Optional.ofNullable(diseaseRepository.findOne(id)).orElseThrow(RuntimeException::new);
+        return Optional.ofNullable(diseaseRepository.findOne(id))
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
