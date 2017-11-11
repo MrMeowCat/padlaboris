@@ -38,12 +38,14 @@ public class DiseaseController {
     }
 
     @PostMapping("patients/{id}/diseases")
-    public ResponseEntity addDisease(@RequestBody final DiseaseDto diseaseDto) {
+    public ResponseEntity addDisease(@RequestBody final DiseaseDto diseaseDto,
+                                     @PathVariable("id") final Integer patientId) {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("patients/{id}/diseases")
-    public ResponseEntity updateDisease(@RequestBody final DiseaseDto diseaseDto) {
+    public ResponseEntity updateDisease(@RequestBody final DiseaseDto diseaseDto,
+                                        @PathVariable("id") final Integer patientId) {
         return ResponseEntity.ok(null);
     }
 
