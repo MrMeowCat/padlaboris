@@ -1,0 +1,4 @@
+CREATE TABLE detail (
+  id BIGINT NOT NULL,
+
+);
