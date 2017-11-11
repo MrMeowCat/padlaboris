@@ -1,8 +1,9 @@
 package com.instinctools.padlaboris.domain.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "procedures")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Procedure implements Serializable {
