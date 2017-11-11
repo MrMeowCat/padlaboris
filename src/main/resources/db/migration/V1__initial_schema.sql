@@ -12,7 +12,7 @@ CREATE TABLE details
   weight               DOUBLE PRECISION
 );
 
-CREATE TABLE diseasesdo
+CREATE TABLE diseases
 (
   id                  SERIAL NOT NULL
     CONSTRAINT diseases_pkey
