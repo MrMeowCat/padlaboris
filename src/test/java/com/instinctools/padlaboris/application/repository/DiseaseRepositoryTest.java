@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.domain.service;
+package com.instinctools.padlaboris.application.repository;
 
 import com.instinctools.padlaboris.domain.model.Disease;
 import com.instinctools.padlaboris.domain.repository.DiseaseRepository;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class DiseaseCrudTest {
+public class DiseaseRepositoryTest {
 
     @Autowired
     private DiseaseRepository diseaseRepository;
@@ -26,12 +26,12 @@ public class DiseaseCrudTest {
 
     @Before
     public void setUp() {
-        final Disease disease = new Disease(
-                null,
-                "cancer",
-                "123",
-                "you're dead",
-                "hardcore");
+        final Disease disease = new Disease();
+
+        disease.setDiseaseName("cancer");
+        disease.setDiseaseCode("123");
+        disease.setDiseaseDescription("you're dead");
+        disease.setDiseaseCode("hardcore");
 
         id = diseaseRepository.save(disease).getId();
     }
