@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.security.dto;
+package com.instinctools.padlaboris.application.security.dto;
 
 import lombok.Data;
 

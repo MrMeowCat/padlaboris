@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.security.model;
+package com.instinctools.padlaboris.application.security.model;
 
 public enum AuthorityType {
 

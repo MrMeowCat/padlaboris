@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.security.service;
+package com.instinctools.padlaboris.application.security.service;
 
 public interface TokenService {
 

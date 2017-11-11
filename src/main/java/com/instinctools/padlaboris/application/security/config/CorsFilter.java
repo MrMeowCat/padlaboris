@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.security.config;
+package com.instinctools.padlaboris.application.security.config;
 
 import org.springframework.stereotype.Component;
 
@@ -21,8 +21,8 @@ public class CorsFilter implements Filter {
     }
 
     @Override
-    public void doFilter(final ServletRequest req, final ServletResponse res,
-                         final FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res
+            , FilterChain chain) throws IOException, ServletException {
 
         final HttpServletResponse response = (HttpServletResponse) res;
 
@@ -38,11 +38,9 @@ public class CorsFilter implements Filter {
         if (request.getMethod().equals("OPTIONS")) {
 
             try {
-
                 response.getWriter().print("OK");
                 response.getWriter().flush();
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         } else {

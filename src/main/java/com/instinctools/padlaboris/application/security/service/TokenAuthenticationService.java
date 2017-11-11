@@ -1,4 +1,4 @@
-package com.instinctools.padlaboris.security.service;
+package com.instinctools.padlaboris.application.security.service;
 
 import org.springframework.security.core.Authentication;
 

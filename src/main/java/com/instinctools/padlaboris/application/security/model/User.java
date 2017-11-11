@@ -1,5 +1,6 @@
-package com.instinctools.padlaboris.security.model;
+package com.instinctools.padlaboris.application.security.model;
 
+import com.instinctools.padlaboris.application.security.model.Authority;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 

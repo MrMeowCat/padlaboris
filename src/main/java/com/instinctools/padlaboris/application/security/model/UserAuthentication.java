@@ -1,5 +1,6 @@
-package com.instinctools.padlaboris.security.model;
+package com.instinctools.padlaboris.application.security.model;
 
+import com.instinctools.padlaboris.application.security.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

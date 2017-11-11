@@ -1,7 +1,6 @@
-package com.instinctools.padlaboris.security.filter;
+package com.instinctools.padlaboris.application.security.filter;
 
-
-import com.instinctools.padlaboris.security.service.TokenAuthenticationService;
+import com.instinctools.padlaboris.application.security.service.TokenAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,5 +30,6 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
         SecurityContextHolder.getContext().setAuthentication(null);
+
     }
 }
