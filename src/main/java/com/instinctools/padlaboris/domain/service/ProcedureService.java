@@ -16,9 +16,24 @@ public interface ProcedureService {
      */
     List<Procedure> findByPatientId(Integer patientId);
 
+    /**
+     * Finds a procedure by id.
+     * @param procedureId id of a procedure
+     * @return a procedure
+     */
     Procedure findById(Integer procedureId);
 
+    /**
+     * Saves a procedure.
+     * @param procedure a procedure to save
+     * @return a saved procedure
+     */
     Procedure save(Procedure procedure);
 
+    /**
+     * Checks if a procedure exists in database.
+     * @param procedureId id of a procedure
+     * @return true if exists, false otherwise
+     */
     boolean exists(Integer procedureId);
 }
