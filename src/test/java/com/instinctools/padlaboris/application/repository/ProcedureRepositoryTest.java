@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +28,11 @@ public class ProcedureRepositoryTest {
 
     @Before
     public void init() {
-        Patient patient = new Patient();
+        final Patient patient = new Patient();
         patient.setLastName("lastName");
         patient.setGender("male");
 
-        Procedure procedure = new Procedure();
+        final Procedure procedure = new Procedure();
         procedure.setProcedureName("Yoga");
         procedure.setPatient(patient);
         procedure.setDate(new Date());
@@ -39,16 +40,17 @@ public class ProcedureRepositoryTest {
 
 //        procedureRepository.save(procedure); saves both
 
-        patient.getProcedures().add(procedure);
+        patient.setProcedures(Arrays.asList(procedure));
+        //patient.getProcedures().add(procedure);
         patientRepository.save(patient); //saves both
     }
 
     @Test
     public void testGet() {
-        List<Procedure> procedures = procedureRepository.findAll();
+        final List<Procedure> procedures = procedureRepository.findAll();
         Assert.assertEquals(1, procedures.size());
 
-        List<Patient> patients = patientRepository.findAll();
+        final List<Patient> patients = patientRepository.findAll();
         Assert.assertEquals(1, patients.size());
     }
 }
