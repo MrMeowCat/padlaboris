@@ -71,7 +71,6 @@ public class Patient implements Serializable {
     @OneToMany(
             mappedBy = "patient",
             fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            cascade = CascadeType.ALL)
     private List<Procedure> procedures;
 }
