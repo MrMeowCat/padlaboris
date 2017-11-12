@@ -1,12 +1,17 @@
 server:
   port: 9090
 
-#DataBase
+# DataBase
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/Padla_Boris_DB
     username: Padla_Boris
     password: Padla_Boris
-  jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+
+# Flyway
+flyway:
+  enabled: true
+  locations: classpath:db/migration
+  check-location: true
