@@ -18,14 +18,18 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object handler) throws Exception {
-        final Method method = ((HandlerMethod) handler).getMethod();
-        final String message = "Called method '"
-                + method.getName()
-                + "' in controller '"
-                + method.getDeclaringClass().getSimpleName()
-                + "'";
 
-        log.info(message);
+        if (handler instanceof HandlerMethod) {
+            final Method method = ((HandlerMethod) handler).getMethod();
+            final String message = "Called method '"
+                    + method.getName()
+                    + "' in controller '"
+                    + method.getDeclaringClass().getSimpleName()
+                    + "'";
+
+            log.info(message);
+        }
+
         return super.preHandle(request, response, handler);
     }
 
@@ -34,15 +38,19 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
                                 final HttpServletResponse response,
                                 final Object handler,
                                 final Exception ex) throws Exception {
-        final Method method = ((HandlerMethod) handler).getMethod();
-        final String message = "Method '"
-                + method.getName()
-                + "' in controller '"
-                + method.getDeclaringClass().getSimpleName()
-                + "' finished with code "
-                + Integer.toString(response.getStatus());
 
-        log.info(message);
+        if (handler instanceof HandlerMethod) {
+            final Method method = ((HandlerMethod) handler).getMethod();
+            final String message = "Method '"
+                    + method.getName()
+                    + "' in controller '"
+                    + method.getDeclaringClass().getSimpleName()
+                    + "' finished with code "
+                    + Integer.toString(response.getStatus());
+
+            log.info(message);
+        }
+
         super.afterCompletion(request, response, handler, ex);
     }
 }

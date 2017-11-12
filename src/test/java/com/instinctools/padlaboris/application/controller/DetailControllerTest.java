@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DetailControllerIT {
+public class DetailControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
