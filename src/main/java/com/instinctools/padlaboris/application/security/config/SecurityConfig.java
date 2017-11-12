@@ -21,7 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/auth").permitAll()
-                .antMatchers("/signUp").hasAuthority("DOCTOR")
+                .antMatchers("/**").hasAuthority("ADMIN")
+                .antMatchers("/signUp", "/users/**", "/patients/**").hasAuthority("DOCTOR")
+                .antMatchers("/patients/**").hasAuthority("PATIENT")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),

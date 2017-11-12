@@ -20,7 +20,7 @@ public class AuthorityController {
 
     private final DozerBeanMapper dozerBeanMapper;
 
-    @RequestMapping(value = "/users/{userId}/authorities", method = RequestMethod.PUT)
+    @RequestMapping(value = "/authorities", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody final AuthorityDto authorityDto) {
 
         final Authority authorityToUpdate = dozerBeanMapper.map(authorityDto, Authority.class);
