@@ -37,7 +37,7 @@ public class UserRepositoryTest {
 
         final String content = "username";
 
-        final User savedUser=userRepository.findByUsername(content);
+        final User savedUser = userRepository.findByUsername(content);
 
         assertThat(savedUser.getUsername(), Is.is(user.getUsername()));
     }
