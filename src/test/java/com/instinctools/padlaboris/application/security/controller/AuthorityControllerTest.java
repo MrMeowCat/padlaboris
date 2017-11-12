@@ -39,8 +39,6 @@ public class AuthorityControllerTest {
 
     private AuthorityDto authorityDto;
 
-    private Authority authority;
-
     private Integer id;
 
     @Before
@@ -48,7 +46,7 @@ public class AuthorityControllerTest {
 
         authorityRepository.deleteAll();
 
-        authority = new Authority();
+        final Authority authority = new Authority();
 
         authority.setAuthority("PATIENT");
 

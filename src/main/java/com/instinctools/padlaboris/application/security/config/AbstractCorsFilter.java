@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,13 +17,7 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
-public class CorsFilter implements Filter {
-
-    @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-
-        //init method.
-    }
+public abstract class AbstractCorsFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse res,
@@ -54,11 +47,5 @@ public class CorsFilter implements Filter {
 
             chain.doFilter(request, response);
         }
-    }
-
-    @Override
-    public void destroy() {
-
-        //destroy method.
     }
 }

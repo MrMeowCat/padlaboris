@@ -23,7 +23,7 @@ public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "authority_id")
     private Integer id;
 
     @Column(name = "authority")

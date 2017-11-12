@@ -1,12 +1,12 @@
 package com.instinctools.padlaboris.application.security.service.jwt;
 
-import com.instinctools.padlaboris.application.security.SecurityConstants;
 import com.instinctools.padlaboris.application.security.model.User;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,12 @@ public class DefaultTokenService implements TokenService {
 
     private final UserDetailsService userDetailsService;
 
+    @Value("${secret.key}")
+    private String key;
+
+    @Value("${token.expiration.time}")
+    private Integer expirationTime;
+
     @Override
     public String getToken(final String username, final String password) throws UsernameNotFoundException {
         if (username == null || password == null) {
@@ -39,7 +45,7 @@ public class DefaultTokenService implements TokenService {
         if (password.equals(user.get().getPassword())) {
 
             final Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.HOUR, SecurityConstants.TOKEN_EXPIRATION_TIME);
+            calendar.add(Calendar.HOUR, expirationTime);
             token.put("authorityType", String.valueOf(user.get().getAuthorities()));
             token.put("userId", user.get().getId());
             token.put("username", user.get().getUsername());
@@ -50,7 +56,7 @@ public class DefaultTokenService implements TokenService {
             jwtBuilder.setExpiration(calendar.getTime());
             jwtBuilder.setClaims(token);
 
-            return jwtBuilder.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET_KEY).compact();
+            return jwtBuilder.signWith(SignatureAlgorithm.HS512, key).compact();
         } else {
 
             throw new UsernameNotFoundException("Auth error");

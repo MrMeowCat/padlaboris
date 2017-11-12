@@ -41,7 +41,8 @@ public class AuthController {
             final TokenDto response = new TokenDto();
             response.setToken(token.get());
 
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.ok().header("access-token", response.getToken())
+                    .body("Successfully");
         } else {
 
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No Authentication!");

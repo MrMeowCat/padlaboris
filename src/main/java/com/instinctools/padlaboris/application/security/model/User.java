@@ -41,13 +41,13 @@ public class User implements UserDetails {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Authority> authorities;
 
-    @Column(name = "accountNonExpired")
+    @Column(name = "account_non_expired")
     private boolean accountNonExpired;
 
-    @Column(name = "accountNonLocked")
+    @Column(name = "account_non_locked")
     private boolean accountNonLocked;
 
-    @Column(name = "credentialsNonExpired")
+    @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
 
     @Column(name = "enabled")

@@ -1,6 +1,5 @@
 package com.instinctools.padlaboris.application.security.service.jwt;
 
-import com.instinctools.padlaboris.application.security.SecurityConstants;
 import com.instinctools.padlaboris.application.security.model.User;
 import com.instinctools.padlaboris.application.security.model.UserAuthentication;
 import io.jsonwebtoken.Claims;
@@ -12,6 +11,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -29,11 +29,17 @@ public class DefaultTokenAuthenticationService implements TokenAuthenticationSer
 
     private final UserDetailsService userDetailsService;
 
+    @Value("${secret.key}")
+    private String key;
+
+    @Value("${auth.header.name}")
+    private String headerName;
+
     @Override
     @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
     public Authentication authenticate(final HttpServletRequest request) {
 
-        final String token = request.getHeader(SecurityConstants.AUTH_HEADER_NAME);
+        final String token = request.getHeader(headerName);
 
         final Optional<Jws<Claims>> tokenData = Optional.ofNullable(parseToken(token));
 
@@ -65,7 +71,7 @@ public class DefaultTokenAuthenticationService implements TokenAuthenticationSer
 
             try {
 
-                return Jwts.parser().setSigningKey(SecurityConstants.SECRET_KEY).parseClaimsJws(token);
+                return Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException
                     | SignatureException | IllegalArgumentException e) {
 
