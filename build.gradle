@@ -94,3 +94,24 @@ jacocoTestReport {
 }
 
 test.finalizedBy jacocoTestReport
+
+task integrationTest(type: Test) {
+    include '**/*IT.*'
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumpsIT")
+    }
+    testLogging {
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                println "Results: ${result.resultType} (${result.testCount} tests, " +
+                        "${result.successfulTestCount} successes, ${result.failedTestCount} failures, " +
+                        "${result.skippedTestCount} skipped)"
+            }
+        }
+    }
+}
+
+integrationTest.shouldRunAfter test
+build.dependsOn integrationTest
