@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/signUp").permitAll()
                 .antMatchers("/auth").permitAll()
+                .antMatchers("/signUp").hasAuthority("DOCTOR")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
