@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest Controller for Authority.
+ */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorityController {
@@ -20,6 +23,12 @@ public class AuthorityController {
 
     private final DozerBeanMapper dozerBeanMapper;
 
+    /**
+     * Method for update Authority.
+     *
+     * @param authorityDto AuthorityDto authorityDto.
+     * @return AuthorityDto response from updated Authority.
+     */
     @RequestMapping(value = "/authorities", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody final AuthorityDto authorityDto) {
 

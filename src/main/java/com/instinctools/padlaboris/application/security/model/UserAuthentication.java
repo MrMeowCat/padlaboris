@@ -1,11 +1,13 @@
 package com.instinctools.padlaboris.application.security.model;
 
-import com.instinctools.padlaboris.application.security.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * Class that describes the Authentication.
+ */
 public class UserAuthentication implements Authentication {
 
     private static final long serialVersionUID = -417662671177231759L;
@@ -14,7 +16,7 @@ public class UserAuthentication implements Authentication {
 
     private boolean authenticated = true;
 
-    public UserAuthentication(User user) {
+    public UserAuthentication(final User user) {
         this.user = user;
     }
 
@@ -44,7 +46,7 @@ public class UserAuthentication implements Authentication {
     }
 
     @Override
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+    public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
 
         this.authenticated = isAuthenticated;
     }

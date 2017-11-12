@@ -1,6 +1,6 @@
 package com.instinctools.padlaboris.application.security.filter;
 
-import com.instinctools.padlaboris.application.security.service.TokenAuthenticationService;
+import com.instinctools.padlaboris.application.security.service.jwt.TokenAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,14 +14,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Custom token filter.
+ */
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
     private final TokenAuthenticationService authenticationService;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest request, final ServletResponse response,
+                         final FilterChain chain) throws IOException, ServletException {
 
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
 
@@ -30,6 +33,5 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
         SecurityContextHolder.getContext().setAuthentication(null);
-
     }
 }

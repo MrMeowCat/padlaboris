@@ -3,31 +3,37 @@ package com.instinctools.padlaboris.application.security.service;
 import com.instinctools.padlaboris.application.security.model.Authority;
 import com.instinctools.padlaboris.application.security.repository.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
+/**
+ * Class that implements the Authority's work and databases.
+ */
 @Service
-@Transactional
+@Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultAuthorityService implements AuthorityService {
 
     private final AuthorityRepository authorityRepository;
 
     @Override
-    public Authority create(Authority authority) {
+    public Authority create(final Authority authority) {
+
+        log.info("Authority created.");
 
         return authorityRepository.save(authority);
     }
 
     @Override
-    public Authority update(Authority authority) {
+    public Authority update(final Authority authority) {
+
+        log.info("Authority updated.");
 
         final Authority saved = authorityRepository.findOne(authority.getId());
 
-        authority.setAuthority(authority.getAuthority() == null ?
-                saved.getAuthority() : authority.getAuthority());
+        authority.setAuthority(authority.getAuthority() == null
+                ? saved.getAuthority() : authority.getAuthority());
         authority.setUserId(saved.getUserId());
 
         return authorityRepository.save(authority);

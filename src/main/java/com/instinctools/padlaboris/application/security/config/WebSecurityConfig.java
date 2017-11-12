@@ -1,7 +1,7 @@
 package com.instinctools.padlaboris.application.security.config;
 
 import com.instinctools.padlaboris.application.security.filter.AuthenticationTokenFilter;
-import com.instinctools.padlaboris.application.security.service.TokenAuthenticationService;
+import com.instinctools.padlaboris.application.security.service.jwt.TokenAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,9 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Custom WebSecurityConfiguration.
+ */
 @EnableWebSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final TokenAuthenticationService tokenAuthenticationService;
 

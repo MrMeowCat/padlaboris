@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest Controller for User.
+ */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
@@ -22,8 +25,15 @@ public class UserController {
 
     private final DozerBeanMapper dozerBeanMapper;
 
+    /**
+     * Method for create new User.
+     *
+     * @param userDto UserDto userDto.
+     * @return UserDto response from created User.
+     */
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody UserDto userDto) {
+    public ResponseEntity create(@RequestBody final UserDto userDto) {
+
         final User userToSave = dozerBeanMapper.map(userDto, User.class);
 
         final User savedUser = userService.create(userToSave);
@@ -33,8 +43,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    /**
+     * Method for update User from database.
+     *
+     * @param userDto UserDto userDto.
+     * @return UserDto response from updated User.
+     */
     @RequestMapping(value = "/users", method = RequestMethod.PUT)
-    public ResponseEntity update(@RequestBody UserDto userDto) {
+    public ResponseEntity update(@RequestBody final UserDto userDto) {
+
         final User userToUpdate = dozerBeanMapper.map(userDto, User.class);
 
         final User userToResponse = userService.update(userToUpdate);
@@ -46,26 +63,40 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity fetchAll() {
+
         return ResponseEntity.ok().body(userService.listUsers());
     }
 
+    /**
+     * Method for fetch user by Id.
+     *
+     * @param userId User userId.
+     * @return UserDto response from displayed User.
+     */
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
     public ResponseEntity fetch(@PathVariable final Integer userId) {
-        User userToResponse = userService.fetch(userId);
 
-        UserDto response = dozerBeanMapper.map(userToResponse, UserDto.class);
+        final User userToResponse = userService.fetch(userId);
+
+        final UserDto response = dozerBeanMapper.map(userToResponse, UserDto.class);
 
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for delete user by Id.
+     *
+     * @param userId User userId.
+     * @return UserDto response from deleted User.
+     */
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable final Integer userId) {
 
-        User userToResponse = userService.fetch(userId);
+        final User userToResponse = userService.fetch(userId);
 
         userService.delete(userId);
 
-        UserDto response = dozerBeanMapper.map(userToResponse, UserDto.class);
+        final UserDto response = dozerBeanMapper.map(userToResponse, UserDto.class);
 
         return ResponseEntity.ok().body(response);
     }

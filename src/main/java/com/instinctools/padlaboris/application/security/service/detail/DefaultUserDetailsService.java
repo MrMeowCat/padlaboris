@@ -1,6 +1,7 @@
-package com.instinctools.padlaboris.application.security.service;
+package com.instinctools.padlaboris.application.security.service.detail;
 
 import com.instinctools.padlaboris.application.security.model.User;
+import com.instinctools.padlaboris.application.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+/**
+ * Class that implements the UserDetailsService.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultUserDetailsService implements UserDetailsService {
@@ -15,13 +21,15 @@ public class DefaultUserDetailsService implements UserDetailsService {
     private final UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-        final User user = userService.getUserByUsername(username);
+        final Optional<User> user = Optional.ofNullable(userService.getUserByUsername(username));
 
-        if (user != null) {
+        if (user.isPresent()) {
 
-            return user;
-        } else throw new UsernameNotFoundException("User not found");
+            return user.get();
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
     }
 }

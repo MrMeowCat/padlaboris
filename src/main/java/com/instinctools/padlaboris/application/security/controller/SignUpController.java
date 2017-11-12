@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest Controller for.
+ */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SignUpController {
@@ -20,11 +23,21 @@ public class SignUpController {
 
     private final DozerBeanMapper dozerBeanMapper;
 
+    /**
+     * Method for create User.
+     *
+     * @param dto UserDto dto.
+     * @return UserDto response from created User.
+     */
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody final UserDto dto) {
 
-        final User user=dozerBeanMapper.map(dto,User.class);
+        final User userToSave = dozerBeanMapper.map(dto, User.class);
 
-        return ResponseEntity.ok().body(defaultUserService.create(user));
+        final User userToResponse = defaultUserService.create(userToSave);
+
+        final UserDto response = dozerBeanMapper.map(userToResponse, UserDto.class);
+
+        return ResponseEntity.ok().body(response);
     }
 }

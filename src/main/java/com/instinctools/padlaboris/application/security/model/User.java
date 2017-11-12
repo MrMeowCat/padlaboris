@@ -1,6 +1,5 @@
 package com.instinctools.padlaboris.application.security.model;
 
-import com.instinctools.padlaboris.application.security.model.Authority;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,13 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Entity that describes the user.
+ */
 @Entity
 @Data
 @Table(name = "users")
-public class User implements Serializable,UserDetails{
+@SuppressWarnings("PMD.ShortClassName")
+public class User implements UserDetails {
 
     private static final long serialVersionUID = -4031829348949429069L;
 
@@ -35,7 +37,7 @@ public class User implements Serializable,UserDetails{
     @Column(name = "password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Authority> authorities;
 

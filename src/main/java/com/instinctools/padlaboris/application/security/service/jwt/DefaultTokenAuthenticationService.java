@@ -1,5 +1,6 @@
-package com.instinctools.padlaboris.application.security.service;
+package com.instinctools.padlaboris.application.security.service.jwt;
 
+import com.instinctools.padlaboris.application.security.SecurityConstants;
 import com.instinctools.padlaboris.application.security.model.User;
 import com.instinctools.padlaboris.application.security.model.UserAuthentication;
 import io.jsonwebtoken.Claims;
@@ -11,15 +12,17 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.instinctools.padlaboris.application.security.SecurityConstants;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
+import java.util.Optional;
 
+/**
+ * Service for checking token.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultTokenAuthenticationService implements TokenAuthenticationService {
@@ -27,27 +30,31 @@ public class DefaultTokenAuthenticationService implements TokenAuthenticationSer
     private final UserDetailsService userDetailsService;
 
     @Override
-    public Authentication authenticate(HttpServletRequest request) {
-        final String token = request.getHeader(SecurityConstants.authHeaderName);
+    @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
+    public Authentication authenticate(final HttpServletRequest request) {
 
-        final Jws<Claims> tokenData = parseToken(token);
+        final String token = request.getHeader(SecurityConstants.AUTH_HEADER_NAME);
 
-        if (tokenData != null) {
-            Long validateTime = (Long) tokenData.getBody().get("validateTime");
+        final Optional<Jws<Claims>> tokenData = Optional.ofNullable(parseToken(token));
 
-            Calendar calendar = Calendar.getInstance();
-            Long nowTime = calendar.getTime().getTime();
+        if (tokenData.isPresent()) {
+
+            final Long validateTime = (Long) tokenData.get().getBody().get("validateTime");
+
+            final Calendar calendar = Calendar.getInstance();
+
+            final Long nowTime = calendar.getTime().getTime();
 
             if (nowTime < validateTime) {
 
-                User user = getUserFromToken(tokenData);
-                if (user != null) {
+                final Optional<User> user = Optional.ofNullable(getUserFromToken(tokenData.get()));
 
-                    return new UserAuthentication(user);
+                if (user.isPresent()) {
+
+                    return new UserAuthentication(user.get());
                 }
             }
         }
-
 
         return null;
     }
@@ -58,7 +65,7 @@ public class DefaultTokenAuthenticationService implements TokenAuthenticationSer
 
             try {
 
-                return Jwts.parser().setSigningKey(SecurityConstants.secretKey).parseClaimsJws(token);
+                return Jwts.parser().setSigningKey(SecurityConstants.SECRET_KEY).parseClaimsJws(token);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException
                     | SignatureException | IllegalArgumentException e) {
 
@@ -69,16 +76,8 @@ public class DefaultTokenAuthenticationService implements TokenAuthenticationSer
         return null;
     }
 
-    private User getUserFromToken(final Jws<Claims> tokenData) {
-
-        try {
-
-            return (User) userDetailsService
-                    .loadUserByUsername(tokenData.getBody().get("username").toString());
-        } catch (UsernameNotFoundException e) {
-
-            throw new RuntimeException("User "
-                    + tokenData.getBody().get("username").toString() + " not found");
-        }
+    private User getUserFromToken(final Jws<Claims> tokenData) throws RuntimeException {
+        return (User) userDetailsService
+                .loadUserByUsername(tokenData.getBody().get("username").toString());
     }
 }

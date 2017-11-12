@@ -1,10 +1,25 @@
 package com.instinctools.padlaboris.application.security;
 
+/**
+ * Security constants.
+ */
 public final class SecurityConstants {
 
-    public static final String authHeaderName="Token";
+    private SecurityConstants() {
+    }
 
-    public static final String secretKey="dc6589483a672de25ff765172494d42e138cd8a5";
+    /**
+     * Header name.
+     */
+    public static final String AUTH_HEADER_NAME = "Token";
 
-    public static final int tokenExpirationTime = 40;
+    /**
+     * Key for token.
+     */
+    public static final String SECRET_KEY = "dc6589483a672de25ff765172494d42e138cd8a5";
+
+    /**
+     * Expiration time for access token.
+     */
+    public static final int TOKEN_EXPIRATION_TIME = 3;
 }

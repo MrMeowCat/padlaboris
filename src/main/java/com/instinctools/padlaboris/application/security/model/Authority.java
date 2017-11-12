@@ -9,12 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
+/**
+ * Entity that describes the authority.
+ */
 @Entity
 @Data
 @Table(name = "authorities")
-public class Authority implements Serializable, GrantedAuthority {
+@SuppressWarnings("PMD.AvoidFieldNameMatchingTypeName")
+public class Authority implements GrantedAuthority {
 
     private static final long serialVersionUID = -4031273181701977660L;
 
