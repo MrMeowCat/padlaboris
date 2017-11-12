@@ -4,18 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.data.domain.Persistable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Entity of MedicalLeave.
@@ -25,7 +24,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "medical_leave")
-public class MedicalLeave implements Persistable<Integer> {
+public class MedicalLeave implements Serializable {
 
     private static final long serialVersionUID = 4534131348802359050L;
 
@@ -44,13 +43,7 @@ public class MedicalLeave implements Persistable<Integer> {
     @NonNull
     private Date endDate;
 
-    @Override
-    public boolean isNew() {
-        return Objects.nonNull(id);
-    }
-
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "MEDICAL_DOCTOR")
 //    private String md;
-
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.springframework.data.domain.Persistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Entity of Recipe.
@@ -25,7 +24,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recipe")
-public class Recipe implements Persistable<Integer> {
+public class Recipe implements Serializable {
 
     private static final long serialVersionUID = 5202257027329539131L;
 
@@ -51,11 +50,6 @@ public class Recipe implements Persistable<Integer> {
     @Column(name = "dosage")
     @NonNull
     private String dosage;
-
-    @Override
-    public boolean isNew() {
-        return Objects.nonNull(id);
-    }
 
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "MEDICAL_DOCTOR")
