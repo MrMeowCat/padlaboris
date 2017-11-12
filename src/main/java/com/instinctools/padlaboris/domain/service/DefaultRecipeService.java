@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Default recipe service.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultRecipeService implements RecipeService {

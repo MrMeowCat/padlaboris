@@ -33,7 +33,7 @@ public interface RecipeService {
     void delete(Integer id);
 
     /**
-     * Method searches for Recipe by start date
+     * Method searches for Recipe by start date.
      *
      * @param medicineName start date
      * @return list of Recipes

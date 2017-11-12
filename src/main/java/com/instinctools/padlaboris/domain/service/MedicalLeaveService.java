@@ -34,7 +34,7 @@ public interface MedicalLeaveService {
     void delete(Integer id);
 
     /**
-     * Method searches for Medical leave by start date
+     * Method searches for Medical leave by start date.
      *
      * @param startDate start date
      * @return list of Medical leaves

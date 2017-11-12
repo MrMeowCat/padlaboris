@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +24,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "medical_leave")
+@Table(name = "medical_leaves")
 public class MedicalLeave implements Serializable {
 
     private static final long serialVersionUID = 4534131348802359050L;
@@ -42,6 +43,9 @@ public class MedicalLeave implements Serializable {
     @Column(name = "end_date")
     @NonNull
     private Date endDate;
+
+    @OneToOne(mappedBy = "medicalLeave")
+    private Disease disease;
 
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "MEDICAL_DOCTOR")
