@@ -25,10 +25,10 @@ CREATE TABLE diseases
   start_date          DATE
 );
 
-CREATE TABLE medical_leaves
+CREATE TABLE medical_leave
 (
   medical_leave_id SERIAL NOT NULL
-    CONSTRAINT medical_leaves_pkey
+    CONSTRAINT medical_leave_pkey
     PRIMARY KEY,
   end_date         DATE,
   start_date       DATE
@@ -52,10 +52,10 @@ CREATE TABLE patients
     REFERENCES details
 );
 
-CREATE TABLE recipes
+CREATE TABLE recipe
 (
   recipe_id     SERIAL NOT NULL
-    CONSTRAINT recipes_pkey
+    CONSTRAINT recipe_pkey
     PRIMARY KEY,
   dosage        VARCHAR(255),
   expire_date   DATE,
