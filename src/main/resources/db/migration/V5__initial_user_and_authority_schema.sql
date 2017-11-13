@@ -16,8 +16,8 @@ CREATE TABLE users
    user_id INTEGER
      CONSTRAINT user_user_id_fkey
      REFERENCES authorities,
-   account_non_expired bit,
-   account_non_locked bit,
-   credentials_non_expired bit,
-   enabled bit
+   account_non_expired boolean,
+   account_non_locked boolean,
+   credentials_non_expired boolean,
+   enabled boolean
 );
