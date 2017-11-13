@@ -16,3 +16,4 @@ flyway:
   enabled: true
   locations: classpath:db/migration
   check-location: true
+  baseline-on-migrate: true
