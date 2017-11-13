@@ -29,7 +29,9 @@ import java.util.List;
 public class ProcedureController {
 
     private final PatientService patientService;
+
     private final ProcedureService procedureService;
+
     private final DozerBeanMapper dozerBeanMapper;
 
     /**
@@ -48,6 +50,11 @@ public class ProcedureController {
         return ResponseEntity.ok(procedureDtos);
     }
 
+    /**
+     * Fetches a procedure.
+     * @param procedureId id of a procedure
+     * @return a procedure
+     */
     @GetMapping("procedures/{id}")
     public ResponseEntity getProcedure(@PathVariable("id") final Integer procedureId) {
         final Procedure procedure = procedureService.findById(procedureId);

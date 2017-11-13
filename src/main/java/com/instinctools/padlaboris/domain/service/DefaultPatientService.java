@@ -68,7 +68,12 @@ public class DefaultPatientService implements PatientService {
     }
 
     @Override
-    @SuppressWarnings("PMD.NPathComplexity")
+    @SuppressWarnings({
+            "PMD.NPathComplexity",
+            "PMD.CyclomaticComplexity",
+            "PMD.ModifiedCyclomaticComplexity",
+            "PMD.StdCyclomaticComplexity"
+    })
     public Patient update(final Patient patient) {
 
         log.info("Patient was updated.");

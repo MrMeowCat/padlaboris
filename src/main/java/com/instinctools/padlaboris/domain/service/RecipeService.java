@@ -46,4 +46,11 @@ public interface RecipeService {
      * @return list of Recipes
      */
     List<Recipe> findAll();
+
+    /**
+     * Finds recipes for a disease.
+     * @param diseaseId id of a disease
+     * @return a list of recipes
+     */
+    List<Recipe> findByDiseaseId(Integer diseaseId);
 }

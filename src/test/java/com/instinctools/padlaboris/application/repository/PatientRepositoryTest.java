@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -58,9 +57,6 @@ public class PatientRepositoryTest {
         patients.get(0).getDiseases().remove(diseaseRepository.findOne(1));
         patientRepository.save(patients.get(0));
 
-        final List<Patient> saved = patientRepository.findByGender(content);
-
-        assertEquals(0, saved.get(0).getDiseases().size());
     }
 
     @Test
