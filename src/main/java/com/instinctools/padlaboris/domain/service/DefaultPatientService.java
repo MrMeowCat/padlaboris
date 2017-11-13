@@ -82,6 +82,8 @@ public class DefaultPatientService implements PatientService {
         patient.setDeathDate(patient.getDeathDate() == null ? saved.getDeathDate() : patient.getDeathDate());
         patient.setMobileNumber(patient.getMobileNumber() == null ? saved.getMobileNumber() : patient.getMobileNumber());
         patient.setHomeNumber(patient.getHomeNumber() == null ? saved.getHomeNumber() : patient.getHomeNumber());
+        patient.setDiseases(patient.getDiseases() == null ? saved.getDiseases() : patient.getDiseases());
+        patient.setProcedures(patient.getProcedures() == null ? saved.getProcedures() : patient.getProcedures());
 
         return patientRepository.save(patient);
     }

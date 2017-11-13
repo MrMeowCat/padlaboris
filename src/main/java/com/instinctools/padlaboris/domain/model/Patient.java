@@ -1,6 +1,7 @@
 package com.instinctools.padlaboris.domain.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,7 +26,8 @@ import java.util.List;
 /**
  * Entity that describes the patient.
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "patients")
 public class Patient implements Serializable {
@@ -74,4 +76,12 @@ public class Patient implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Procedure> procedures;
+
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(
+            mappedBy = "patient",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Disease> diseases;
 }

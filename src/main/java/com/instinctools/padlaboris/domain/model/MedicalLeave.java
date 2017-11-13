@@ -1,9 +1,9 @@
 package com.instinctools.padlaboris.domain.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,8 @@ import java.util.Date;
  * Entity of MedicalLeave.
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "medical_leaves")
@@ -36,18 +37,12 @@ public class MedicalLeave implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start_date")
-    @NonNull
     private Date startDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "end_date")
-    @NonNull
     private Date endDate;
 
     @OneToOne(mappedBy = "medicalLeave")
     private Disease disease;
-
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "MEDICAL_DOCTOR")
-//    private String md;
 }

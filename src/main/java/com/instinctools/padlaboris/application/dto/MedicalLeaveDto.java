@@ -21,4 +21,6 @@ public class MedicalLeaveDto implements Serializable {
     private Long startDate;
 
     private Long endDate;
+
+    private DiseaseDto disease;
 }
