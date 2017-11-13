@@ -3,17 +3,25 @@ package com.instinctools.padlaboris.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Entity that describes the diseases.
@@ -50,4 +58,16 @@ public class Disease implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "endDate")
     private Date endDate;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "medical_leave")
+    private MedicalLeave medicalLeave;
+
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(
+            mappedBy = "disease",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Recipe> recipes;
 }

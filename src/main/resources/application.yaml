@@ -7,6 +7,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/Padla_Boris_DB
     username: Padla_Boris
     password: Padla_Boris
+  jpa:
     hibernate:
       ddl-auto: validate
 
