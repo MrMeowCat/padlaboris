@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.instinctools.padlaboris.domain.repository")
+@EnableJpaRepositories({"com.instinctools.padlaboris.domain.repository",
+        "com.instinctools.padlaboris.application.security.repository"})
 @SuppressWarnings("PMD")
 public class PadlaBorisApplication {
 
