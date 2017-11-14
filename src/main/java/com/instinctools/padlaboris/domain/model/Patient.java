@@ -75,7 +75,7 @@ public class Patient implements Serializable {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     private List<Procedure> procedures;
-
+  
     @Fetch(FetchMode.SELECT)
     @OneToMany(
             mappedBy = "patient",

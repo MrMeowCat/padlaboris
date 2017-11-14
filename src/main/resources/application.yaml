@@ -16,3 +16,8 @@ flyway:
   enabled: true
   locations: classpath:db/migration
   check-location: true
+  baseline-on-migrate: true
+
+secret.key : dc6589483a672de25ff765172494d42e138cd8a5
+auth.header.name: Token
+token.expiration.time: 3

@@ -9,7 +9,8 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class LoggingPointcut {
 
-    @Pointcut("execution(public * com.instinctools.padlaboris.domain.service..*(..))")
+    @Pointcut("execution(public * com.instinctools.padlaboris.domain.service..*(..))"
+            + "||execution(public * com.instinctools.padlaboris.application.security.service..*(..))")
     public void logService() {
         // avoid implementation
     }
