@@ -1,9 +1,9 @@
 package com.instinctools.padlaboris.domain.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,8 @@ import java.util.Date;
  * Entity of Recipe.
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recipes")
@@ -38,27 +39,19 @@ public class Recipe implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "issue_date")
-    @NonNull
     private Date issueDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "expire_date")
-    @NonNull
     private Date expireDate;
 
     @Column(name = "medicine_name")
-    @NonNull
     private String medicineName;
 
     @Column(name = "dosage")
-    @NonNull
     private String dosage;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "disease_id")
     private Disease disease;
-
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "MEDICAL_DOCTOR")
-//    private String md;
 }

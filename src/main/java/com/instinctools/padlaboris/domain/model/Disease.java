@@ -1,8 +1,9 @@
 package com.instinctools.padlaboris.domain.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,7 +30,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "diseases")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Disease implements Serializable {
@@ -70,4 +73,8 @@ public class Disease implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Recipe> recipes;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
-    @Query(value = "SELECT * FROM recipe WHERE medicine_name=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM recipes WHERE medicine_name=?1", nativeQuery = true)
     List<Recipe> findByMedicineName(String medicineName);
+
+    List<Recipe> findByDiseaseId(Integer diseaseId);
 }
