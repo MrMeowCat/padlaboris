@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Rest Controller for User.
  */
@@ -63,8 +66,11 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity fetchAll() {
+        final List<UserDto> response = new ArrayList<>();
+        userService.listUsers()
+                .forEach(user -> response.add(dozerBeanMapper.map(user, UserDto.class)));
 
-        return ResponseEntity.ok().body(userService.listUsers());
+        return ResponseEntity.ok().body(response);
     }
 
     /**

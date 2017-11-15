@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.instinctools.padlaboris.application.security.model.Authority;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- *  * Intermediate class of User and controller work.
+ * * Intermediate class of User and controller work.
  */
 @Data
 @JsonTypeName(value = "user")
@@ -31,5 +30,5 @@ public class UserDto implements Serializable {
     private String password;
 
     @JsonProperty
-    private List<Authority> authorities;
+    private List<AuthorityDto> authorities;
 }
