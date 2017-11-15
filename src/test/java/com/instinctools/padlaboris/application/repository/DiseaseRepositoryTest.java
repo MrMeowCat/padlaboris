@@ -67,10 +67,4 @@ public class DiseaseRepositoryTest {
 
         assertThat(diseaseRepository.findOne(id).getDiseaseName(), Is.is(content));
     }
-
-    @Test
-    public void delete() {
-        diseaseRepository.delete(1);
-        assertEquals(0, diseaseRepository.findAll().size());
-    }
 }

@@ -42,4 +42,9 @@ public class DefaultRecipeService implements RecipeService {
     public List<Recipe> findAll() {
         return recipeRepository.findAll();
     }
+
+    @Override
+    public List<Recipe> findByDiseaseId(final Integer diseaseId) {
+        return recipeRepository.findByDiseaseId(diseaseId);
+    }
 }

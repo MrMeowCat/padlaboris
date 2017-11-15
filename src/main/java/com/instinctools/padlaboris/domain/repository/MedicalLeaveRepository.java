@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface MedicalLeaveRepository extends JpaRepository<MedicalLeave, Integer> {
 
-    @Query(value = "SELECT * FROM medical_leave WHERE start_date=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM medical_leaves WHERE start_date=?1", nativeQuery = true)
     List<MedicalLeave> findByStartDate(Date startDate);
 }

@@ -25,4 +25,6 @@ public class RecipeDto implements Serializable {
     private String medicineName;
 
     private String dosage;
+
+    private DiseaseDto disease;
 }

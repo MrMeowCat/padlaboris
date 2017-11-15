@@ -68,7 +68,12 @@ public class DefaultPatientService implements PatientService {
     }
 
     @Override
-    @SuppressWarnings("PMD.NPathComplexity")
+    @SuppressWarnings({
+            "PMD.NPathComplexity",
+            "PMD.CyclomaticComplexity",
+            "PMD.ModifiedCyclomaticComplexity",
+            "PMD.StdCyclomaticComplexity"
+    })
     public Patient update(final Patient patient) {
 
         log.info("Patient was updated.");
@@ -82,6 +87,8 @@ public class DefaultPatientService implements PatientService {
         patient.setDeathDate(patient.getDeathDate() == null ? saved.getDeathDate() : patient.getDeathDate());
         patient.setMobileNumber(patient.getMobileNumber() == null ? saved.getMobileNumber() : patient.getMobileNumber());
         patient.setHomeNumber(patient.getHomeNumber() == null ? saved.getHomeNumber() : patient.getHomeNumber());
+        patient.setDiseases(patient.getDiseases() == null ? saved.getDiseases() : patient.getDiseases());
+        patient.setProcedures(patient.getProcedures() == null ? saved.getProcedures() : patient.getProcedures());
 
         return patientRepository.save(patient);
     }
