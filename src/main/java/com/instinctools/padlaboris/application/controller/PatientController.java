@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Rest Controller for Patient.
  */
@@ -46,10 +49,19 @@ public class PatientController {
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch all Patient from database.
+     *
+     * @return List of PatientDto patientDto.
+     */
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
     public ResponseEntity fetchAllPatients() {
 
-        return ResponseEntity.ok().body(patientService.listPatients());
+        final List<PatientDto> response = new ArrayList<>();
+        patientService.listPatients()
+                .forEach(patient -> response.add(dozerBeanMapper.map(patient, PatientDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 
     /**
@@ -104,15 +116,35 @@ public class PatientController {
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch patient by gender.
+     *
+     * @param gender Patient gender.
+     * @return List of PatientDto patientDto.
+     */
     @RequestMapping(value = "/patients/gender/{gender}", method = RequestMethod.GET)
     public ResponseEntity fetchByGender(@PathVariable final String gender) {
 
-        return ResponseEntity.ok().body(patientService.findByGender(gender));
+        final List<PatientDto> response = new ArrayList<>();
+        patientService.findByGender(gender)
+                .forEach(patient -> response.add(dozerBeanMapper.map(patient, PatientDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch patient by last name.
+     *
+     * @param lastName Patient lastName.
+     * @return List of PatientDto patientDto.
+     */
     @RequestMapping(value = "/patients/lastName/{lastName}", method = RequestMethod.GET)
     public ResponseEntity fetchByLastName(@PathVariable final String lastName) {
 
-        return ResponseEntity.ok().body(patientService.findByLastName(lastName));
+        final List<PatientDto> response = new ArrayList<>();
+        patientService.findByLastName(lastName)
+                .forEach(patient -> response.add(dozerBeanMapper.map(patient, PatientDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 }

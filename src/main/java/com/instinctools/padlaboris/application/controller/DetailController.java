@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Rest Controller for Detail.
  */
@@ -81,10 +84,19 @@ public class DetailController {
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch all details from database.
+     *
+     * @return List of DetailDto detailDto.
+     */
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ResponseEntity fetchAllDetails() {
 
-        return ResponseEntity.ok().body(detailService.listDetails());
+        final List<DetailDto> response = new ArrayList<>();
+        detailService.listDetails()
+                .forEach(detail -> response.add(dozerBeanMapper.map(detail, DetailDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 
     /**
@@ -105,15 +117,35 @@ public class DetailController {
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch detail by blood type.
+     *
+     * @param bloodType Detail bloodType.
+     * @return List of DetailDto detailDto.
+     */
     @RequestMapping(value = "/patients/{patientId}/details/bloodType/{bloodType}", method = RequestMethod.GET)
     public ResponseEntity fetchByBloodType(@PathVariable final Integer bloodType) {
 
-        return ResponseEntity.ok().body(detailService.findByBloodType(bloodType));
+        final List<DetailDto> response = new ArrayList<>();
+        detailService.findByBloodType(bloodType)
+                .forEach(detail -> response.add(dozerBeanMapper.map(detail, DetailDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Method for fetch detail by rhesus factor.
+     *
+     * @param rhesusFactor Detail rhesusFactor.
+     * @return List of DetailDto detailDto.
+     */
     @RequestMapping(value = "/patients/{patientId}/details/rh/{rhesusFactor}", method = RequestMethod.GET)
     public ResponseEntity fetchByRhesusFactor(@PathVariable final String rhesusFactor) {
 
-        return ResponseEntity.ok().body(detailService.findByRhesusFactor(rhesusFactor));
+        final List<DetailDto> response = new ArrayList<>();
+        detailService.findByRhesusFactor(rhesusFactor)
+                .forEach(detail -> response.add(dozerBeanMapper.map(detail, DetailDto.class)));
+
+        return ResponseEntity.ok().body(response);
     }
 }

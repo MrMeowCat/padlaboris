@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.instinctools.padlaboris.domain.model.Detail;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -48,5 +47,5 @@ public class PatientDto implements Serializable {
     private long deathDate;
 
     @JsonProperty
-    private Detail details;
+    private DetailDto details;
 }
