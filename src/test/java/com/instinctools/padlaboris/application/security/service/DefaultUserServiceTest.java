@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -89,13 +87,5 @@ public class DefaultUserServiceTest {
         final User receivedUser = userService.fetch(id);
 
         assertThat(receivedUser.getUsername(), Is.is(user.getUsername()));
-    }
-
-    @Test
-    public void listUsers() throws Exception {
-
-        final List<User> users = userService.listUsers();
-
-        assertThat(users.get(0).getUsername(), Is.is(user.getUsername()));
     }
 }
